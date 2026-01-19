@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Patoloji">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23000' width='100' height='100'/><text y='70' font-size='60' fill='%23fff' text-anchor='middle' x='50'>📚</text></svg>">
+    <title>Patoloji</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .container {
+            padding: 20px;
+            padding-bottom: 100px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .header {
+            text-align: center;
+            color: #888;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .content {
+            font-size: 38px;
+            line-height: 1.4;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .test-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.9);
+            border: 2px solid #444;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .test-btn.active {
+            background: #0066ff;
+            border-color: #0066ff;
+        }
+
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 20px;
+            color: #888;
+            z-index: 100;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            padding: 10px;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .btn {
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 15px;
+            font-size: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn:active {
+            background: rgba(255,255,255,0.3);
+            transform: scale(0.95);
+        }
+
+        .hidden-answer {
+            filter: blur(15px);
+            user-select: none;
+        }
+
+        .reveal-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 40px;
+            background: #0066ff;
+            border: none;
+            color: #fff;
+            font-size: 22px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .reveal-btn:active {
+            background: #0055dd;
+            transform: scale(0.95);
+        }
+
+        .table-container {
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .custom-table {
+            border-collapse: collapse;
+            margin: 20px auto;
+            text-align: left;
+            font-size: 18px;
+        }
+
+        .custom-table th, .custom-table td {
+            border: 2px solid #444;
+            padding: 12px;
+        }
+
+        .custom-table th {
+            background: #1a1a1a;
+            color: #0066ff;
+        }
+
+        .custom-table td {
+            background: #0a0a0a;
+        }
+
+        @media (min-width: 768px) {
+            .content {
+                font-size: 48px;
+            }
+            .custom-table {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="test-btn" id="testBtn" onclick="toggleTest()">🧠 Test: OFF</button>
+    <div class="timer" id="timer">7</div>
+
+    <div class="container">
+        <div class="header" id="header">Slayt 1 / 149</div>
+        <div class="content" id="content"></div>
+    </div>
+
+    <div class="controls">
+        <button class="btn" onclick="prev()">←</button>
+        <button class="btn" id="playBtn" onclick="togglePlay()">⏸</button>
+        <button class="btn" onclick="next()">→</button>
+    </div>
+
+    <script>
+        const slides = ["1. Hipoksiden ilk etkilenen organel… Mitokondri",
+            "2. Vaskülitlerde görülen nekroz tipi… Fibrinoid nekroz",
+            "3. Hücrenin hidrolitik enzimlerle kendi kendini sindirmesi… Otofaji",
+            `4. İskemik zedelenmede hücre içinde:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Azalanlar</th><th>Artanlar</th></tr>
+<tr><td>ATP (ilk azalan)</td><td>ADP + İnorganik fosfatlar</td></tr>
+<tr><td>Glikojen</td><td>Anaerobik solunum → laktik asit →<br>pH azalır → kromatinde kümelenme</td></tr>
+<tr><td>Protein sentezi</td><td>Yağlar hücre dışına atılamaz ve artar</td></tr>
+<tr><td>Potasyum</td><td>Sodyum, klor ve su</td></tr>
+<tr><td></td><td>Kalsiyum</td></tr>
+</table>
+</div>`,
+            "5. Fizyolojik apoptozisin örnekleri… Menstrüasyonda endometriyal hücrelerin dökülmesi, laktasyon döneminden çıkan meme dokusunun küçülmesi",
+            "6. Patolojik apoptoz örneği… Duktus tıkanıklıklarına bağlı olarak parankimal organlarda gelişen patolojik atrofi",
+            "7. Otofajinin en sık nedeni… Besin yetersizliği",
+            "8. Apoptotik hücrelerdeki yüzey belirteçleri… Fosfotidilserin, Trombospondin, C1q",
+            "9. Hücrede irreversibl değişikliklere neden olan enzimleri hangi iyon tetikler… Kalsiyum",
+            "10. Serbest oksijen radikallerini oluşturan ana enzim… NADPH oksidaz",
+            "11. Doğumdan kısa bir süre sonra meydana gelen uterus boyutundaki azalma… Fizyolojik atrofi",
+            "12. Otofajik vakuoller… Atrofide görülür",
+            "13. Enzimatik sindimin görüldüğü nekroz… Likefaksiyon nekrozu",
+            "14. Akut pankreatitteki nekroz tipi... Yağ nekrozu",
+            `15. Nekroz – Apoptoz farkları:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Nekroz</th><th>Apoptoz</th></tr>
+<tr><td>İnflamasyon var</td><td>İnflamasyon yok</td></tr>
+<tr><td>Gen yok</td><td>Gen var</td></tr>
+<tr><td>Patolojik</td><td>Fizyolojik veya patolojik</td></tr>
+<tr><td>Jel elektroforezi kesintisiz patern</td><td>Jel elektroforezi merdiven paterni</td></tr>
+</table>
+</div>`,
+            "16. Apoptozda jel elektroforezinde… Merdiven paterni görülür",
+            `17. Nekroz tipleri:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Nekroz tipi</th><th>Görüldüğü Yer</th><th>Önemli Özellikler</th></tr>
+<tr><td>Koagülasyon nekrozu</td><td>Hipokside ve malign tümörler</td><td>Protein denatürasyonu<br>(enzimatik yıkım yok)</td></tr>
+<tr><td>Likefaksiyon nekrozu</td><td>Beyin hipoksisi ve apse</td><td>Nötrofil enzimleri ile<br>sindirim var</td></tr>
+<tr><td>Kazeifikasyon nekrozu</td><td>Tüberküloz</td><td>Peynir kıvamında</td></tr>
+<tr><td>Gangrenöz nekroz</td><td>Diyabetik ayak (hipoksi)</td><td>Ekstremitelerin<br>koagülasyon nekrozu</td></tr>
+<tr><td>Yağ nekrozu</td><td>Meme, Pankreatit</td><td>Travmatik, Enzimatik</td></tr>
+<tr><td>Fibrinoid nekroz</td><td>Vaskülit, Malign hipertansiyon,<br>Akut romatizmal ateş</td><td>Damar duvarı hasarı,<br>Aschoff cisimleri</td></tr>
+</table>
+</div>`,
+            `18. Apoptozisi regüle eden genler:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Apoptozisi artıranlar</th><th>Apoptozisi engelleyenler</th></tr>
+<tr><td>P53</td><td>Bcl-2</td></tr>
+<tr><td>Bax, Bak</td><td>Bcl-XL</td></tr>
+<tr><td>Bad, Bid, Bim, Puma, Noxa</td><td>MCL-1</td></tr>
+<tr><td>Bcl-XS</td><td>FLIP</td></tr>
+</table>
+</div>`,
+            "19. Kanser riskinde artış görülmeyen metaplazi örnekleri… Apokrin metaplazi ve miyozitis ossifikans",
+            "20. Kromatin kümelenmesi ve kabalaşmasının sebebi… pH azalması",
+            "21. Apoptozun en karakteristik bulgusu… Kromatin kondenzasyon ve fragmantasyonu",
+            `22. Apopitozun intrensek yolunun tetikleyicileri…
+
+• Büyüme faktörlerinin kanda azalması
+• Hatalı katlanmış proteinlerin aşırı birikimi
+• Kalıcı DNA hasarı`,
+            `23. İnflamasyonun kimyasal mediyatörleri:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Hücre kökenli</th><th>Plazma kökenli</th></tr>
+<tr><td><b>Depo halde:</b><br>• Vazoaktif aminler (histamin, serotonin)<br>• Lizozomal enzimler</td><td>• Koagülasyon<br>• Kinin<br>• Kompleman<br>• 3K</td></tr>
+<tr><td><b>Yeni sentezlenenler:</b><br>• Lipid mediyatörler (AA metabolitleri ve PAF)<br>• Sitokinler<br>• Reaktif oksijen radikalleri<br>• Nitrik oksit<br>• Nöropeptitler</td><td></td></tr>
+</table>
+</div>`,
+            "24. İleri yaşta serbest radikal hasarı ile oluşan, lipid ve protein kompleksinden oluşan sarı-kahverengi pigment... Lipofuskin",
+            `25. Patolojik kalsifikasyonlar:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Distrofik kalsifikasyon</th><th>Metastatik kalsifikasyon</th></tr>
+<tr><td>Serum kalsiyum normal</td><td>Hiperkalsemide</td></tr>
+<tr><td>Hasarlı dokularda kalsiyum birikimesi</td><td>Normal dokulara kalsiyum çökmesi</td></tr>
+<tr><td><b>Örnek:</b> Psammom cisimcikleri</td><td><b>Örnek:</b> Hiperkalsemi yapan hastalıklar</td></tr>
+</table>
+</div>`,
+            "26. Atrofide uyarılan yolak hangisidir… Ubiquitin-proteozom yolağı",
+            "27. Hipertansiyona sekonder gelişen miyokard kalınlaşmasının morfolojik tanımı… Patolojik hipertrofi",
+            "28. Metaplazi en sık hangi hücre tipinde oluşur… Epitel",
+            "29. En sık epitel metaplazisi hangisidir… Kolumnar epitelin skuamöz epitele dönüşümü",
+            "30. Histamin salınımını tetikleyen faktörler… Travma, ısı, IgE'nin Fc parçası, C3a, C5a, IL1, IL8",
+            "31. Trombosit agregasyonunu indükleyen araşidonik asit metaboliti... Tromboksan A2",
+            "32. Ağır yanıkların erken evrelerindeki vasküler geçirgenlik artışına neden olan mekanizma... Direkt endotel hasarı",
+            "33. En önemli kemotaktik maddeler... C5a, IL-8, LT-B4, Bakteri parçalanma ürünleri, Eotaksin, 5-HETE",
+            "34. Kronik inflamasyonda doku hasarı tamiri, fibrozis ve anjiyogenezden sorumlu hücre hangisidir... Aktive makrofaj (=Alternatif makrofaj=M2 makrofaj)",
+            "35. Yardımcı T hücre 1 (Th1) lenfositler hangisini salgılar… Gamma interferon",
+            "36. Difteride hangi tip inflamasyon görülür... Pseudomembranöz inflamasyon",
+            "37. Dokularda granülomların oluşmasında rol oynayan en önemli mekanizma nedir... TH1 hücre yanıtı",
+            "38. Alternatif makrofajlardan (M2)… TGF-B ve IL-10 salgılanır",
+            "39. Mast hücre degranülasyonundan sorumlu anaflatoksinler… C3a, C4a, C5a",
+            "40. Anjiyogenezi inhibe eden faktör... Trombospondin",
+            "41. AL tipi amiloidozisin en sık nedeni... Multipl miyelom",
+            "42. Siklin bağımlı kinaz inhibitörlerinden biri olan p27 (CDKN1B) hücre siklusu kontrol noktalarından G2-M noktasında... Siklin B-CDK1'i inhibe eder",
+            "43. Hangi proteinin fosforilasyonu hücre siklusunun ilerlemesinde önemli rol oynar... Retinoblastom proteini",
+            `44. p53'ün hücre siklusundaki rolü:
+
+✓ CDK inhibitörü olan p21'i artırarak siklusu durdurur
+✓ GADD45 geni ile DNA tamirini sağlar
+✓ DNA tamiri sağlanırsa MDM2 geni ile p53 inhibe edilir ve siklus devam eder
+✓ DNA tamiri başarısız olursa bax ve puma geniyle apoptozu uyarır`,
+            "45. Mukus üretiminden sorumlu inflamatuvar mediyatörler… PgD2, IL-13, Histamin",
+            "46. Lipoksinler… Anti-lökotrien etki, anti-inflamatuavrar etki ve vazodilatör etki gösterir",
+            "47. Depo halde bulunan inflamatuvar sitokinler… Histamin, serotonin, lizozomal enzimler",
+            "48. Bir dokunun veya organın olması gereken yer dışında bulunması... Heterotopi (Koristom)",
+            "49. Hem mezenkimal hem de epitelyal malign hücreler içeren tümör... Karsinosarkom",
+            "50. Tümör hücrelerinin biçim, büyüklük ve boyanma özellikleri açısından birbirlerinden farklı olmaları... Pleomorfizm",
+            "51. Yerleştiği organın matür hücre ve dokularında organizasyon bozukluğu gösteren kitle oluşumu... Hamartom",
+            "52. Soluk infarktta… Demarkasyon hattı görülür",
+            "53. Akut hücresel şişmeden sorumlu iyon… Sodyum",
+            "54. Antioksidan maddeler: A,C,E Vitamini, Selenyum, Sistein, Demir bakır taşıyan proteinler",
+            "55. Ana yıkıcı kaspazlar... Kaspaz 3 ve kaspaz 6",
+            "56. Hücrenin hidrotilik enzimlerle parçalanmasına neden olan iyon… Kalsiyum",
+            "57. Granülomlarda gözüken kogülasyon nekrozu… Kazeifikasyon nekrozu",
+            "58. Parotiste mikroskobik olarak nonkazeifiye granülomlarla karakterize bir kronik inflamasyonda öncelikle düşünülmesi gereken... Sarkoidoz",
+            "59. Plazma hücre diskrazilerinde, immünoglo-bulinlerin çekirdekte birikimi ile oluşan hyalen cisimcik... Dutcher cisimciği",
+            "60. Hiperkalsemide kalsiyumun normal dokulara çökmesi… Metastatik kalsifikasyon",
+            "61. Atrofide sayısı artan hücre organeli... Lizozomlar",
+            "62. Tükürük bezi boşaltım kanallarında uzun süreli taş varlığında, kanal döşeyici epitelinde görülen değişim… Metaplazi",
+            "63. Mezenşimal dokularda görülen ve tek geridönüşümsüz metaplazi… Miyozitis ossifikans",
+            "64. Granülasyon dokusunda damar geçirgenliğini arttıran molekül... VEGF",
+            "65. Histaminin damar geçirgenliğini arttırıcı mekanizması… Endotel kontraksiyonu",
+            "66. İnflamasyonda yuvarlanmadan sorumlu endotelyal selektinler… E-selektin, P-selektin, CD34",
+            "67. İnflamasyonda lökositlerin adezyonundan sorumlu endotelyal molekül... ICAM-1, WCAM-1",
+            "68. Makrofajlardan salındıktan sonra Th1 hüclerini uyararak gama interferon salınımına neden olan sitokin... IL-12-15-18",
+            "69. Nötrofilden zengin, püy oluşturan inflamasyon… Süpüratif inflamasyon",
+            "70. Dokularda granülomların oluşmasında rol oynayan en önemli mekanizma nedir... TH1 hücre yanıtı",
+            "71. Dokularda granülomları oluşturan temel hücre… Epiteloid histiyosit",
+            "72. Sekonder yara iyileşmesinde epitelizasyon ne zaman başlar?... En erken 3. gün",
+            "73. Skar dokusunun kontrakte olmasını sağlayan hücre hangisidir... Fibroblastların düz kas hücreleri gibi davranması (=Miyofibroblastlar)",
+            "74. Azalmış onkotik basınca bağlı oluşan ödem örnekleri nelerdir... Malnütrisyon, nefrotik sendrom, karaciğer yetmezliği, hipoalbüminemi, Menetrier hastalığı",
+            "75. Yükselmiş hidrostatik basıncına bağlı oluşan ödem örnekleri nelerdir... Konjestif kalp yetmezliği, bozulmuş venöz dönüş, konstriktif perikardit, asit, venöz obstrüksiyon, arteryel dilatasyon, ısı, nörohümoral disregülasyon",
+            "76. Venöz trombüsün en sık kaynağı hangisidir... Diz üstü derin bacak venleri",
+            "77. GNAS mutasyonu görülen durumlar… McCune Albright sendromu, fibröz displazi",
+            `78. Patolojide "Baykuş Gözleri":
+
+• Hodgkin lenfomadaki Reed-Sternberg hücreleri
+• CMV enfeksiyonuna bağlı intranükleer-intrasitoplazmik inklüzyonlar akla gelmelidir`,
+            "79. Üst ve alt solunum yollarında granülomatöz reaksiyonla karakterize hastalık... Wegener granülomatozu (granülomatöz polianjit)",
+            "80. Malign potansiyeli olmayan oral lezyon… Hairy lökoplaki",
+            "81. Hairy lökoplakiye neden olan etyolojik ajan… EBV",
+            "82. HPV ilişkili skuamöz hücreli karsinomun daha sık görüldüğü GİS lokalizasyonu… Orofarinks",
+            "83. Tükürük bezlerinin en sık görülen malign tümörü… Mukoepidermoid karsinom",
+            "84. Antoni A ve B alanları ve palizat dizilim gösteren nükleusların görüldüğü tümör... Schwannoma",
+            "85. Epidermiste hipergranülozun görüldüğü lezyon… Liken planus",
+            "86. Lineer Ig birikiminin görüldüğü büllü hastalık… Büllöz pemfigoid",
+            "87. Balık ağı tarzında IG birikimi görülen hastalık… Pemfigus",
+            "88. Pemfigus vulgariste epitelyal ayrışma seviyesi… Suprabazal (intraepidermal)",
+            "89. Pemfigus vulgaris hangi tip aşırı duyarlılık reaksiyonudur… Tip II",
+            "90. Benign müköz membran pemfigoid'de epitelyal aryışma seviyesi… Subepitelyal (subepidermal)",
+            "91. Genellikle çölyak hastalığı ile beraber olan veziküllü hastalık… Dermatitis Herpetiformis",
+            "92. Karbonik anhidraz-2 gen mutasyonu görülen lezyon… Osteopetrozis",
+            `93. Kemik tümörleri…
+
+• En sık benign kemik tümörü: Osteokondrom
+• En sık primer malign kemik tümörü: Osteosarkom
+• En sık malign kemik tümörü: Metastazlar`,
+            "94. Fibröz displazide… Çin harfleri veya çengelli iğne şekilli kemik trabekülleri mevcuttur. GNAS mutasyonu görülür",
+            "95. Tüberkülozdaki dev hücrenin adı… Langhans tipi dev hücre",
+            "96. Sjögren hastalığına spesifik antikorlar... SS-A, SS-B",
+            "97. Göz ve ağız kuruluğu ile karakterize otoimmün hastalık... Sjögren sendromu",
+            "98. AIDS'de en sık görülen malign tümör... Kaposi Sarkomu",
+            "99. AIDS'de intraoral en sık görülen malign tümör... Kaposi Sarkomu",
+            "100. Kongo kırmızısı boyası ile polarize ışık altında sarı-yeşil çift kırınımın (birefrejans) görüldüğü odontojenik tümör… Pindborg tümörü",
+            "101. AL tipi amiloidozisin en sık nedeni hangisidir... Multipl miyelom (primer amiloidoz)",
+            "102. Epitelde organizasyon - matürasyon bozukluğu, pleomorfizm, atipinin olması ... Displazi",
+            "103. İn situ karsinomu invaziv karsinomdan ayıran özellik nedir... Bazal membranın sağlam olması",
+            "104. Patogenezinde Epstein-Barr virusun rol oynadığı hastalıklar hangileridir... Hodgkin lenfoma, Burkitt lenfoma lenfoma, Nazofarenks karsinomu, Enfeksiyöz mononükleoz",
+            "105. Kaposi sarkomu, malign lenfomalar ve multipl miyelomda rolü olduğu düşünülen virus hangisidir... Human Herpes Virüs Tip 8",
+            "106. Mutasyonu bazal hücreli karsinoma ve medulloblastomaya yol açabilen, Hedgehog sinyal yolağında negatif düzenleyici olan tümör supresör gen… PTCH1 (Gorlin-Goltz sendromu)",
+            "107. Prekanseröz olan liken planus alt tipi... Atrofik ve eroziv tip liken planus",
+            "108. Deskuamatif gingivitise neden olan liken planus alt tipi... Eroziv tip liken",
+            "109. Bazal tabakada dejenerasyon, bazal membranda testere dişi görünümü, subepitelyal bant tarzında lenfositik infiltrasyon… Liken planus",
+            "110. Bazal tabakada apopitoza giden keratinositler… Civatte Body's",
+            "111. Pemfigus hangi tip aşırı duyarlılık reaksiyonudur? ... Tip 2 (sitoksik tip) aşırı duyarlılık reaksiyonu",
+            "112. SLE hangi tip aşırı duyarlılık reksiyonudur?... Tip 3 (immün kompleks hastalığı) aşırı duyarlılık reksiyonu – hematolojik bulguları tip 2!!!",
+            "113. Pemfigus vulgaris'te otoantikorların hedef antijeni... Desmoglein",
+            "114. Benign müköz membran pemfigoidde otoantikorların hedef antijenleri… Laminin, BPA2",
+            "115. Psöudomembran, eritamatöz lezyon, hiperkeratotik lezyon yapabilen mantar enfeksiyonu... Candidozis",
+            "116. Coğrafik dil ile birliktelik gösteren rekatif artrit… Reiter sendromu",
+            "117. Oral kanserde direkt evre 4 (ileri evre) yapan durumlar... T4, N2, N3 ve M1",
+            "118. Konjenital epulis ile benzer histolojiye sahip tümör… Granüler hücreli tümör (Abricossof tümörü)",
+            "119. Fissürlü dil, yüz ve dudaklarda ödem, tekrarlayan fasiyal paralizi... Merkellson Rosenthall sendromu",
+            "120. Kemikte yerleşim gösteren fibrohistiyositik proliferasyon ve osteoklastik hücrelerle karakterize anormal reaktif proliferasyon... Santral dev hücreli granuloma, Brown tümör, Cherubizm",
+            "121. Ağız tabanında germ hücrelerinden köken alan kistik lezyon... Epidermoid, dermoid kist",
+            "122. Çenelerde medüller alanda daralma, kortikal kemik artışı, artmış anemi ve osteomiyelit riski, azalmış rezorpsiyon... Osteopetrozis",
+            "123. Çene grafilerinde buzlu cam görünümü, camda parmak izi görünümü veya portakal kabuğu görünümü… Fibröz displazi",
+            "124. Grafilerde soğan kabuğu manzarası oluşturan çocukluk çağı kemik tümörü... Ewing sarkom",
+            "125. T (11; 22)'nin neden olduğu kemik tümörü... Ewing sarkom",
+            "126. Nüks potansiyeli en fazla olan gelişimsel odontojenik kist... Odontojenik keratokist",
+            "127. Kökler arasında üçgen şekilli radyolusensi... SOD (skuamöz odontojenik tümör)",
+            "128. Maksilla anterior'da görülen ameloblastom… Desmoplastik tip ameloblastom",
+            "129. Hem odontojenik epitelin hem de mezenkimin malign olduğu odontojenik tümör... Odontojenik karsinosarkom",
+            "130. Radyolojik olarak sementoblastom ile karışan köke yapışık olmayan odontojenik tümör... Odontoblastom",
+            "131. Maksilla anterior'da gömülü kanin ile birlikte olan uniloküler radyolusent lezyon... Adenomatoid odontojenik tümör, dentigiröz kist",
+            "132. Nüks oranının yüksek olması nedeniyle tedavide enükleasyonun tercih edilmediği odontojenik kist… Odontojenik keratokist",
+            "133. Zona enfeksiyonlarından sonra ağrını sebad etmesi... Postherpetik nevralji",
+            "134. Gardner sendromunda çenelerdeki lezyon… Multipl osteomlar",
+            "135. Proliferatif gingivitis, damakta detrüktif ülser böbrek yetmezliği ile giden vaskülit... Wegener (Granülomatoz polianjitis)",
+            "136. Orta hat destrüktif hastalıkları... Wegener, midline granülom, diğer NonHodgkin lenfomalar, idiopatik",
+            "137. Boyun orta hatta yutkunma ile hareket eden nonodontojenk kist… Troglossal duktus kisti",
+            "138. Perinöral invazyon yapan minör tükrük bezi malignitesi... Polimorfik düşük dereceli adenokarsinom",
+            "139. Özellikle papiller diş etinde görülen, gebelik tümörü olarak da bilinen patoloji... Piyojenik granülom",
+            "140. Piyojenik granülom ile benzer histolojik özellikler gösteren lezyon... Hemajiyom, granülasyon dokusu",
+            "141. Dokuya tam oturmayan hareketli protezlerin yumuşak dokuda yarattığı irritasyon ve inflamatuar durum nedeniyle; zaman içinde özellikle vestibülde oluşan düzensiz fibröz doku proliferasyonu... Epulis fissuratum",
+            "142. Disorganize matür sement, enamel dentin dokuları içeren ve kitle oluşturan lezyon... Hamartom (odontoma)",
+            "143. Kısmen daha organize odontom tipi… Compound odontom",
+            "144. Scalloped dil... Makroglossi",
+            "145. Sementomanın kemik korpusundaki şiddetli hali... Sementoosseoz displazi",
+            "146. Her dört kadranda görülen yeni sement-kemik yapımı ile karakterize fizroosseoz lezyon... Florid sementoosseoz displazi",
+            "147. Nazolabial çukuru dolduran ve burun kanadını dışarı iten bir yumuşak doku kisti... Nazolabial kist (nazoalveolar) kist",
+            "148. Bir tür palmiye meyvesi olan betel nut (veya areca nut) çiğneme alışkanlığı sonucu, oral mukozada gelişen premalign durum... Oral submuköz fibrozis",
+            "149. Heck hastalığın etkeni… HPV tip 13 ve 32"];
+
+        let current = 0;
+        let playing = true;
+        let timeLeft = 7;
+        let testMode = false;
+        let revealed = false;
+        let timer;
+
+        function show(i) {
+            if (i < 0 || i >= slides.length) return;
+            
+            let content = slides[i];
+            revealed = false;
+            
+            // Test mode: hide answer after … symbol
+            if (testMode && content.includes('…')) {
+                const parts = content.split('…');
+                if (parts.length >= 2) {
+                    content = parts[0] + '…<br><br><div class="hidden-answer">' + 
+                             parts.slice(1).join('…') + '</div>' +
+                             '<br><button class="reveal-btn" onclick="reveal()">Cevabı Göster 👁️</button>';
+                }
+            }
+            
+            document.getElementById('content').innerHTML = content;
+            document.getElementById('header').textContent = `Slayt ${i + 1} / ${slides.length}`;
+            
+            resetTimer();
+        }
+
+        function reveal() {
+            const hidden = document.querySelector('.hidden-answer');
+            const btn = document.querySelector('.reveal-btn');
+            if (hidden) hidden.classList.remove('hidden-answer');
+            if (btn) btn.remove();
+            revealed = true;
+        }
+
+        function next() {
+            current = (current + 1) % slides.length;
+            show(current);
+        }
+
+        function prev() {
+            current = (current - 1 + slides.length) % slides.length;
+            show(current);
+        }
+
+        function togglePlay() {
+            playing = !playing;
+            document.getElementById('playBtn').textContent = playing ? '⏸' : '▶';
+            if (playing) resetTimer();
+            else stopTimer();
+        }
+
+        function toggleTest() {
+            testMode = !testMode;
+            const btn = document.getElementById('testBtn');
+            btn.textContent = testMode ? '🧠 Test: ON' : '🧠 Test: OFF';
+            btn.classList.toggle('active');
+            show(current);
+        }
+
+        function startTimer() {
+            if (!playing) return;
+            timer = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    document.getElementById('timer').textContent = timeLeft;
+                } else {
+                    // In test mode, don't auto-advance until answer revealed
+                    if (testMode && !revealed) return;
+                    next();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timer) clearInterval(timer);
+        }
+
+        function resetTimer() {
+            stopTimer();
+            timeLeft = 7;
+            document.getElementById('timer').textContent = '7';
+            if (playing) startTimer();
+        }
+
+        // Swipe support
+        let touchX = 0;
+        document.addEventListener('touchstart', e => {
+            touchX = e.touches[0].clientX;
+        });
+        document.addEventListener('touchend', e => {
+            const diff = touchX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                diff > 0 ? next() : prev();
+            }
+        });
+
+        // Keyboard
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                next();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prev();
+            } else if (e.key === 'p' || e.key === 'P') {
+                togglePlay();
+            }
+        });
+
+        // Wake lock
+        if ('wakeLock' in navigator) {
+            navigator.wakeLock.request('screen').catch(() => {});
+        }
+
+        // Initialize
+        show(0);
+    </script>
+</body>
+</html>
