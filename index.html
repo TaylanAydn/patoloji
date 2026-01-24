@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Patoloji">
+    <meta name="apple-mobile-web-app-title" content="TUS Çalışma">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23000' width='100' height='100'/><text y='70' font-size='60' fill='%23fff' text-anchor='middle' x='50'>📚</text></svg>">
-    <title>Patoloji</title>
+    <title>TUS Çalışma</title>
     <style>
         * {
             margin: 0;
@@ -20,6 +20,56 @@
             color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
             overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Home Screen Styles */
+        .home-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .home-title {
+            font-size: 32px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .subject-btn {
+            width: 280px;
+            padding: 25px 40px;
+            margin: 15px;
+            font-size: 24px;
+            border: 2px solid #fff;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subject-btn:hover, .subject-btn:active {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.02);
+        }
+
+        .subject-btn.patoloji {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .subject-btn.fizyoloji {
+            border-color: #4ecdc4;
+            color: #4ecdc4;
+        }
+
+        /* Quiz Screen Styles */
+        .quiz-screen {
+            display: none;
             height: 100vh;
         }
 
@@ -48,10 +98,24 @@
             flex-direction: column;
         }
 
-        .test-btn {
+        .back-btn {
             position: fixed;
             top: 20px;
             left: 20px;
+            background: rgba(0,0,0,0.9);
+            border: 2px solid #444;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .test-btn {
+            position: fixed;
+            top: 20px;
+            left: 80px;
             background: rgba(0,0,0,0.9);
             border: 2px solid #444;
             color: #fff;
@@ -155,6 +219,15 @@
             background: #0a0a0a;
         }
 
+        .subject-indicator {
+            position: fixed;
+            top: 60px;
+            left: 20px;
+            font-size: 12px;
+            color: #666;
+            z-index: 100;
+        }
+
         @media (min-width: 768px) {
             .content {
                 font-size: 48px;
@@ -166,22 +239,36 @@
     </style>
 </head>
 <body>
-    <button class="test-btn" id="testBtn" onclick="toggleTest()">🧠 Test: OFF</button>
-    <div class="timer" id="timer">7</div>
-
-    <div class="container">
-        <div class="header" id="header">Slayt 1 / 149</div>
-        <div class="content" id="content"></div>
+    <!-- Home Screen -->
+    <div class="home-screen" id="homeScreen">
+        <h1 class="home-title">📚 TUS Çalışma</h1>
+        <button class="subject-btn patoloji" onclick="startQuiz('patoloji')">🔬 Patoloji</button>
+        <button class="subject-btn fizyoloji" onclick="startQuiz('fizyoloji')">🧬 Fizyoloji</button>
     </div>
 
-    <div class="controls">
-        <button class="btn" onclick="prev()">←</button>
-        <button class="btn" id="playBtn" onclick="togglePlay()">⏸</button>
-        <button class="btn" onclick="next()">→</button>
+    <!-- Quiz Screen -->
+    <div class="quiz-screen" id="quizScreen">
+        <button class="back-btn" onclick="goHome()">←</button>
+        <button class="test-btn" id="testBtn" onclick="toggleTest()">🧠 Test: OFF</button>
+        <div class="timer" id="timer">7</div>
+        <div class="subject-indicator" id="subjectIndicator"></div>
+
+        <div class="container">
+            <div class="header" id="header">Slayt 1 / 149</div>
+            <div class="content" id="content"></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="prev()">←</button>
+            <button class="btn" id="playBtn" onclick="togglePlay()">⏸</button>
+            <button class="btn" onclick="next()">→</button>
+        </div>
     </div>
 
     <script>
-        const slides = ["1. Hipoksiden ilk etkilenen organel… Mitokondri",
+        // Patoloji Slides
+        const patolojiSlides = [
+            "1. Hipoksiden ilk etkilenen organel… Mitokondri",
             "2. Vaskülitlerde görülen nekroz tipi… Fibrinoid nekroz",
             "3. Hücrenin hidrolitik enzimlerle kendi kendini sindirmesi… Otofaji",
             `4. İskemik zedelenmede hücre içinde:
@@ -308,7 +395,7 @@
             "56. Hücrenin hidrotilik enzimlerle parçalanmasına neden olan iyon… Kalsiyum",
             "57. Granülomlarda gözüken kogülasyon nekrozu… Kazeifikasyon nekrozu",
             "58. Parotiste mikroskobik olarak nonkazeifiye granülomlarla karakterize bir kronik inflamasyonda öncelikle düşünülmesi gereken... Sarkoidoz",
-            "59. Plazma hücre diskrazilerinde, immünoglo-bulinlerin çekirdekte birikimi ile oluşan hyalen cisimcik... Dutcher cisimciği",
+            "59. Plazma hücre diskrazilerinde, immünoglobulinlerin çekirdekte birikimi ile oluşan hyalen cisimcik... Dutcher cisimciği",
             "60. Hiperkalsemide kalsiyumun normal dokulara çökmesi… Metastatik kalsifikasyon",
             "61. Atrofide sayısı artan hücre organeli... Lizozomlar",
             "62. Tükürük bezi boşaltım kanallarında uzun süreli taş varlığında, kanal döşeyici epitelinde görülen değişim… Metaplazi",
@@ -405,14 +492,338 @@
             "146. Her dört kadranda görülen yeni sement-kemik yapımı ile karakterize fizroosseoz lezyon... Florid sementoosseoz displazi",
             "147. Nazolabial çukuru dolduran ve burun kanadını dışarı iten bir yumuşak doku kisti... Nazolabial kist (nazoalveolar) kist",
             "148. Bir tür palmiye meyvesi olan betel nut (veya areca nut) çiğneme alışkanlığı sonucu, oral mukozada gelişen premalign durum... Oral submuköz fibrozis",
-            "149. Heck hastalığın etkeni… HPV tip 13 ve 32"];
+            "149. Heck hastalığın etkeni… HPV tip 13 ve 32"
+        ];
 
+        // Fizyoloji Slides
+        const fizyolojiSlides = [
+            "1. Homeostazis… Vücut iç ortamlarının belli değerler arasında sabit tutulması",
+            "2. Nükleer zarfı stabilize eden temel lamina proteini… Lamin A",
+            "3. Ara filaman tablosu, farklı doku örneklerinde sıkça sorulmaktadır… Keratin, vimentin, desmin ve lamin çıkmış TUS sorusudur",
+            "4. Reseptör aracılı endositoz ile hücreye alınan… B12, Transferrin, LDL, NGF",
+            "5. Reseptör aracılı endositozda görevli moleküller… Klatrin, Adaptin, Dinamin",
+            "6. Artışı difüzyon hızını artıran… Sıcaklık ve lipofilite",
+            "7. Membranda kolesterol artışı akışkanlığı… Azaltır",
+            "8. Posttranslasyonel modifikasyon hangi organelde yapılır… Golgi ve ER",
+            "9. Steroid hormon sentezi hangi organelde yapılır… DER (Düz Endoplazmik Retikulum)",
+            "10. GER'de sentezlenen proteinler… İntegral transmembran plazma proteinleri, Golgi kompleks proteinleri, Lizozomal proteinler, GER proteinleri, Hücreden salgılanacak proteinler",
+            "11. Stereosilyum bulunan… Epididim, duktus deferens, iç kulak tüy hücresi",
+            "12. Troponin C… İskelet kası, Kalmodulin… Düz kas-nöron, Sinaptotagmin… Nöronda, Kalbindin… Bağırsak, Osteokalsin… Kemik, Kalsekestrin… SR",
+            "13. Gs proteini… Adenilat siklazı uyarır → cAMP'yi artırır → Protein kinaz A",
+            "14. Gi proteini… Adenilat siklazı inhibe eder → cAMP'yi azaltır → Protein kinaz A",
+            "15. Gq proteini… Fosfolipaz C'yi uyarır → DAG'ı artırır → Protein kinaz C, IP3'ü artırır → ER'den Ca salınımı",
+            "16. Gq-IP3-kalsiyum yolağını kullananlar kasıcı olanlardır… Oksitosin, GnRH, TRH, TSH, Glukagon, ADH (V1), GHRH, Anjiyotensin II, CCK-β, Katekolamin (α1), Kolesistokinin, Muskarinik 1-3-5",
+            "17. JAK-STAT sinyal iletimi yolunu kullananlar… Sitokinler (INF-γ, IL-6), GH, Prolaktin, EPO, Leptin, Kemokinler, CSF",
+            "18. Hematoksilen-Eosin… Rutin preparat boya, Prusya Mavisi… Depo demiri, Toluidin Mavisi… Metakromatik, Wright-Giemsa… Kan doku",
+            "19. Gomori/Masson/Mallory Trikrom… Kas ve bağ doku, Weigert/Orsein… Elastik lif, Gümüş… Retiküler lif, nöron",
+            "20. Osmium tetraoksit… Lipit (miyelin) siyah, PAS… Bazal membran, karbonhidrat, Alcian Mavisi… Mukus",
+            "21. Sudan Black/III/IV/Oil red… Yağ doku, Fulgein… Nükleik asit tiplendirmesi, Kongo-Red… Amiloid",
+            "22. Lipidlerin hem tespit hem boyanmasından sorumlu… Osmium tetraoksit",
+            "23. Karaciğer hücresinde periyodik asit Schiff boyasıyla gösterilen… Glikojen",
+            "24. Boyalardan hangisi DNA'yı işaretler… Feulgen",
+            "25. E-kaderin-kateninin bulunduğu… Zonula adherens",
+            "26. Hücreyi mekanik strese karşı koruyan, hücre-hücre bağlantısı sağlayan ve intermediyer filamanları sitoplazmik plağa tutunan… Desmozom",
+            "27. Gap junction (neksus) kapatan faktörler… Kalsiyum artışı ve pH azalması (asidoz)",
+            "28. Pulpa… Gevşek (areolar) bağ doku örneğidir",
+            "29. GİS'te Lamina propria… Gevşek bağ doku, Submukoza… Düzensiz sıkı bağ doku",
+            "30. Tip I kollajen… Deri, kemik, tendon (paralel), ligaman, kornea, sklera - Gerilmeye karşı direnç",
+            "31. Tip II kollajen… Kıkırdak ve embriyonik iskelet - Basınca direnç",
+            "32. Tip III kollajen… Düz kas, damar duvarı, fetal cilt, lenfoid doku - Retiküler lif oluşturur, genişleyebilen organda",
+            "33. Tip IV kollajen… Epitel bazal laminaları, glomerül ve lens kapsülü - Destek ve filtrasyon bariyeri",
+            "34. Fibröz kıkırdak… Perikondrium yok, Tip I ve Tip II kollajen var",
+            "35. Elastik kıkırdak… Kalsifikasyon yok",
+            "36. Elastik kıkırdak örnekleri… Kulak kepçesi, östaki, epiglottis, vokal kord",
+            "37. Epifiz plağı zonları (epifizden diyafize)… Rezerv → Proliferasyon → Hipertrofi → Kalsifikasyon → Rezorbsiyon (Ossifikasyon)",
+            "38. Osteoklast lakünası… Howship lakünası",
+            "39. Osteoklast aktivasyonunda tuzak reseptör… Osteoprotegerin",
+            "40. Epidermis tabakaları (dıştan içe)… Corneum → Lucidum → Granülozum → Spinozum → Bazale",
+            "41. Epidermisin en sağlam tabakası… Spinozum (desmozom bulundurur)",
+            "42. Merkel… Dokunma, Meissner… Yüzeyel dokunma, Pacini… Derin basınç-vibrasyon, Ruffini… Eklem açısı-ısı, Krause… Termoreseptör-soğuk",
+            "43. Yüksek frekanslı vibrasyon duyusunu algılayan taktil reseptör… Pacini",
+            "44. Sarı (beyaz) yağ dokusu… Periferik tek çekirdekli ve yassı çekirdek, kemik iliğinde bulunur, büyük hücreler",
+            "45. Kahverengi yağ dokusu… Termogenin, UCP-1, bol mitokondri",
+            "46. İskelet kasındaki T tübül ve Z çizgisinin düz kastaki analogu… Kaveola ve Dens cisim",
+            "47. Miyozin başı ATPaz aktivitesinin bağımlı olduğu iyon… Magnezyum",
+            "48. Miyastenia Gravis… Nikotinik asetilkolin reseptörlerine karşı otoantikor",
+            "49. Eaton-Lambert sendromu… Akson ucundaki Ca²⁺ kanallarına karşı otoantikor (presinaptik)",
+            "50. Botilinum toksini… ACh'in ekzositozunu engeller",
+            "51. Organofosfat zehirlenmesi… İrreversibl Asetilkolinesteraz inhibisyonu",
+            "52. Tip I (yavaş) kas lifleri… Bol kan damarı, bol mitokondri, bol miyoglobin, kırmızı, maraton koşusu",
+            "53. Tip IIb (hızlı) kas lifleri… Az mitokondri, az miyoglobin, çabuk yorulur, halterci, 100 metre koşucu",
+            "54. Düz kasta troponin C yerine… Kalmodulin",
+            "55. Düz kasta tropomiyozin yerine… Kaldesmon ve Kalponin",
+            "56. Tek birimli düz kas örnekleri… Bağırsak, üreterler, mesane, uterus ve küçük arteriyol",
+            "57. Çok birimli düz kas örnekleri… İris, silyer kas, vas deferens, bronş ve büyük damar duvarı",
+            "58. Gama motor nöron uyardığı… İntrafuzal kas lifleri",
+            "59. Alfa motor nöron uyardığı… Ekstrafuzal kas lifleri",
+            "60. Zona pellusidanın dejenere olduğu gün… 5. gün",
+            "61. İmplantasyonun başladığı gün… 6. gün",
+            "62. İmplantasyon ile trofoblastların farklandığı hücreler… Sitotrofoblast ve sinsityotrofoblast",
+            "63. İnvazyon için gerekli yıkıcı enzimleri ve Beta-HCG'yi sentezleyen… Sinsityotrofoblast",
+            "64. Bilaminer germ diski oluşturan hücreler… Hipoblast ve Epiblast",
+            "65. Bilaminer embriyonik diskin, trilaminer germ diskine dönüşümü… Gastrulasyon",
+            "66. Gastrulasyonun başlangıcı… Primitif çizgi oluşumu",
+            "67. Primitif çizgiyi oluşturan hücre… Epiblast",
+            "68. Ektoderm, mezoderm, endoderm oluşmasını sağlayan hücre… Epiblast",
+            "69. Nörülasyon kaçıncı haftalar arası gerçekleşir… 3-4. hafta",
+            "70. Nöral tüpten gelişen… Santral Sinir Sistemi",
+            "71. Nöral tüp defektlerinin oluştuğu haftalar… 3 ve 4. hafta",
+            "72. Nöral krest hücrelerinden gelişenler… Adrenal medulla, Melanosit, Odontoblast, Pia-araknoid mater, Gangliyon, Schwann, Satellit, Trunkokonal septum, Faringeal arkus, Baş-boyun dermis ve hipodermisi, Parafoliküler C hücreleri",
+            "73. Nöral krestten gelişen yüz kemikleri… Maksilla, mandibula, zigomatik, temporal kemik (squamöz), Sphenoid kemik",
+            "74. 1. faringeal arkustan gelişenler… Maksilla, mandibula, zigomatik, temporal kemik",
+            "75. Meckel kıkırdağı… 1. faringeal arkusun mandibuler çıkıntısı",
+            "76. Çiğneme, Tensor timpani, Tensor veli palatini kasları nereden gelişir… 1. faringeal arkus",
+            "77. Malleus ve İnkus kemikleri nereden gelişir… 1. faringeal arkus",
+            "78. Yarık damak/dudak anomalisi hangi faringeal arkus gelişim bozukluğunda görülür… 1. faringeal arkus maksillar çıkıntısının yetersiz füzyonu",
+            "79. Reichert kıkırdağı nereden gelişir… 2. faringeal arkus",
+            "80. Stapes kemiği nereden gelişir… 2. faringeal arkus",
+            "81. Stapedial ve Mimik kasları nereden gelişir… 2. faringeal arkus",
+            "82. Hyoid kemiği nereden gelişir… 2. ve 3. faringeal arkus",
+            "83. Stilofaringeus kası nereden gelişir… 3. faringeal arkus",
+            "84. Larinks kıkırdakları ve kasları nereden gelişir… 4 ve 6. faringeal arkus",
+            "85. Rudimenter olan faringeal arkus… 5",
+            "86. 1. faringeal arkustan gelişen kranyal sinir… 5. (V2 ve V3 dalları)",
+            "87. 2. faringeal arkustan gelişen kranyal sinir… 7.",
+            "88. 3. faringeal arkustan gelişen kranyal sinir… 9.",
+            "89. 4. ve 6. faringeal arkustan gelişen kranyal sinir… 10.",
+            "90. 1. faringeal cepten gelişenler… Timpanik boşluk, mastoid, antrum ve östaki borusu",
+            "91. 2. faringeal cepten gelişenler… Palatin tonsiller",
+            "92. 3. faringeal cepten gelişenler… Timus ve alt paratiroid bezi",
+            "93. 4. faringeal cepten gelişenler… Üst paratiroid bezi",
+            "94. 4. faringeal cebin ventral parçasından (Ultimobrankial cisimcik) gelişenler… Tiroid bezindeki parafoliküler C hücreleri",
+            "95. Parafoliküler hücrenin kökeni… Nöral krest",
+            "96. Eksternal akustik meatus nereden gelişir… 1. faringeal yarık",
+            "97. Servikal sinüs kaybolmazsa oluşan patolojik doku… Brankial kist",
+            "98. 1. faringeal membrandan gelişenler… Timpanik membran",
+            "99. Timpanik membran gelişimine hangi germ tabakaları katılır… Ektoderm, mezoderm, endoderm (üç germ yaprağından gelişir)",
+            "100. Yüzü oluşturan yapılar… Maksiller kabartı (2) - Mandibuler kabartı (2) - Frontonazal kabartı (1)",
+            "101. Yüzün ilk oluşan kısmı… Alt çene ve alt dudaklar",
+            "102. Medial nazal kabartılar ve Maksillar kabartıların kaynaşması ile oluşan… Üst çene ve üst dudak",
+            "103. Medial nazal kabartıların birbiriyle kaynaşmasıyla oluşan… İntermaksiller segment",
+            "104. İntermaksiller segmentten gelişenler… Üst dudak orta kısmı (filtrum), Üst çene premaksiller bölümü, Üst çene premaksiller bölüme eşlik eden gingiva, Primer damak",
+            "105. Primer damak nereden oluşur… İntermaksillar segment",
+            "106. Sekonder damak nereden oluşur… Maksiller kabartı",
+            "107. Sekonder damak neyi yapar… Sert ve yumuşak damak",
+            "108. Dil gelişiminin ilk göstergesi… Median lingual şişkinlik (Tuberculum impar)",
+            "109. Dilin ön 2/3'lük kısmını oluşturan… Lateral lingual şişkinlikler",
+            "110. Dilin arka 1/3'lük kısmını oluşturan… Kopula ve Hipofaringeal çıkıntı",
+            "111. Sırasıyla dil, papilla ve tat tomurcukları yaklaşık olarak kaçıncı haftalarda oluşur… 4-8-12",
+            "112. Ektodermal kökenli tükürük bezi… Parotis bezi",
+            "113. Endodermal kökenli tükürük bezleri… Submandibuler ve Sublingual bez",
+            "114. Maksilla hipoplazisi yapan… Alkol",
+            "115. Mandibula hipoplazisi yapan… Retinoik asit",
+            "116. Mine hipoplazisi yapan… Tetrasiklin",
+            "117. Ameloblastlar nereden köken alır… İç dental epitel",
+            "118. Pulpa nereden köken alır… Dental papilla",
+            "119. Diş gelişiminin ilk bulgusu… Dental lamina",
+            "120. Dental lamina kaçıncı haftada oluşur… 6. hafta",
+            "121. Diş gelişim evreleri sırasıyla… Tomurcuk, şapka, çan",
+            "122. Tomurcuk, şapka, çan evrelerinin oluştuğu haftalar sırasıyla… 8-10-12",
+            "123. Kalıcı diş tomurcuğu ne zaman ortaya çıkar… Şapka evresi - 10. hafta",
+            "124. Enamel düğümü, dental papilla ne zaman ortaya çıkar… Şapka evresi - 10. Hafta",
+            "125. Aşağı yerleşimli kulak yapan… Trimethadion",
+            "126. Yarık damak/dudak yapan… Trimethadion + Diazepam",
+            "127. Oblik yüz yarığı nelerin kaynaşmaması sonucu oluşur… Maksillar kabartı ve lateral nazal kabartı",
+            "128. Stomadeum kökeni… Ektoderm",
+            "129. Primitif ağız tavanı ektoderminden… Adenohipofiz",
+            "130. Nöral krest kökenli… Odontoblast",
+            "131. Bağ doku makrofajı… Histiyosit",
+            "132. Kupffer hücresi… Karaciğer makrofajı",
+            "133. Alveoler makrofaj… Dust (Toz) hücresi",
+            "134. Beyin makrofajı… Mikroglia",
+            "135. Kemik makrofajı… Osteoklast",
+            "136. Sinovyal makrofaj… Tip A sinovisit",
+            "137. Böbrek makrofajı… İntraglomerüler mezengial hücre",
+            "138. Retina makrofajı… Pigment hücresi",
+            "139. Plasenta makrofajı… Hofbauer hücresi",
+            "140. MBP ile birlikte antiparaziter etki gösteren molekül-salgılandığı hücre… Eozinofil - Eozinofil Katyonik protein",
+            "141. Akraba dışı vericiden böbrek naklinde organ reddinin önlenmesi için baskılanması öncelikle hedeflenen… T lenfosit",
+            "142. Hemostazın ilk basamağı… Damar spazmı",
+            "143. Fibrinojeni fibrine dönüştüren… Trombin",
+            "144. Aktif Protein C neyi inhibe eder… Faktör Va ve VIIIa",
+            "145. Doku plazminojen aktivatörü (t-PA)… Plazminojeni plazmine dönüştürür",
+            "146. Doku uygunluk kompleksi II (MHC sınıf II) molekülünü içermeyen kan hücresine örnek… Platelet (trombosit)",
+            "147. Yüksek endotelli venül (HEV)… Lenf nodu iç korteks (parakorteks)",
+            "148. Afferent lenfatik damar… Lenf nodu",
+            "149. Hassal korpüskülü… Timus (medulla) - Tip 6 epitelyoretiküler hücre",
+            "150. Epitelyoretiküler hücreler… Timus",
+            "151. Tip I Epitelyoretiküler hücreler… Kan-Timus bariyeri (korteks)",
+            "152. Billroth kordonları… Dalak (kırmızı pulpa)",
+            "153. PALS (peri artertel lenfatik kılıf)… Dalak - T lenfosit (beyaz pulpa)",
+            "154. Parakeratinize/keratinize epitel… Gingiva, sert damak ve filiform papilla",
+            "155. Lingual lipaz sekrete eden saf seröz bez… Von Ebner bezleri",
+            "156. Tat tomurcuklarının kaybı ve hasarlı fungiform papilladan kaynaklanan tat alma kusuru… Riley Day Sendromu",
+            "157. Sirkumvallat papillası… Von Ebner bezleri içerir, en büyük papilla",
+            "158. Filiform papilla… Sayısı çok, tat tomurcuğu yok, dokunma",
+            "159. Fungiform papilla… Kırmızı mantar şekilli",
+            "160. Umami tat reseptörü… T1R1-T1R3",
+            "161. Tatlı tat reseptörü… T1R2-T1R3",
+            "162. Acı tat reseptörü… T2R",
+            "163. Tuzlu tat için iyon kanalı… Na⁺ geçirgen ENaC",
+            "164. Ekşi tat için iyon kanalı… H⁺ geçirgen ENaC",
+            "165. Bazal elektriksel ritmi oluşturan hücreler… Cajal hücreleri",
+            "166. Mide motilitesini en fazla artıran… Gastrin",
+            "167. Mide motilitesini en fazla azaltan… Kolesistokinin",
+            "168. Midede G hücresinden salgılanan… Gastrin",
+            "169. İnce bağırsakta S hücresinden salgılanan… Sekretin",
+            "170. İnce bağırsakta K hücresinden salgılanan… Gastrik inhibitör polipeptid (GIP)",
+            "171. İnce bağırsakta L hücresinden salgılanan… Glisentin",
+            "172. İnce bağırsakta I hücresinden salgılanan… Kolesistokinin",
+            "173. Pilor ve duodenumda D hücresinden salgılanan… Somatostatin",
+            "174. İnce bağırsakta Mo hücresinden salgılanan… Motilin",
+            "175. GİS peristaltik hareketin anal yönde düz kas gevşemesini sağlayan… VİP",
+            "176. Mide paryetal hücrelerinden salgılanan ve B12 vitamini emilimiyle ilişkili olan madde… İntrinsik faktör (IF)",
+            "177. Eksikliğinde akalazya hastalığı ortaya çıkan… VİP",
+            "178. Kolesistokininin safra kesesi üzerindeki etkisi… Kologog (kasıcı)",
+            "179. Kolesistokinin oddi sfinkterini… Gevşetir",
+            "180. Duodenum S hücresinden, aside cevap olarak salınan ve pankrestan bikarbonat salgılatan hormon… Sekretin",
+            "181. Sekretinin motilite üzerine temel etkisi… Azaltır",
+            "182. Mideden paryetal hücrelerden asit salgısını uyaranlar… Gastrin, Asetilkolin (parasempatik/vagal uyarı), Histamin",
+            "183. Histamin salgısını en güçlü uyaran hormon… Gastrin",
+            "184. Karaciğerde Vit A depo eden hücre… İTO (hepatik Stellat) hücre",
+            "185. Karaciğer parankiminde hepatik kök hücreler… Oval hücre (Hering kanalında)",
+            "186. Disse aralığında biriken fazla sıvı hangi yapı ile lenfatik dolaşıma katılır… Mall aralığı",
+            "187. Kalp ritminin SA noddaki hücrelerin oluşturduğu aksiyon potansiyelleri ile kontrol edilmesinin temel nedeni… SA nod kaynaklı AP frekansının diğer düğümlere göre daha yüksek olması",
+            "188. İkinci kalp sesi duyulduğu sırada kalp siklusunun hangi evresi başlar… İzovolumetrik Gevşeme",
+            "189. Hipotalamo-hipofizer bağlantıda hasarlanma sonrası artacak hormon… Prolaktin (dopaminin baskılayıcı etkisi kalktığı için)",
+            "190. Hipotalamo-hipofizer bağlantıda hasarlanma sonrası etkilenmeyecek hormonlar… ADH ve Oksitosin (hipotalamustan sentezlendiği için)",
+            "191. Büyüme hormonunun reseptörlerine bağlı bulunan ve reseptör zincirlerinin birbirine yaklaşmasıyla tetiklenen enzim… Janus kinaz (JAK)",
+            "192. GH salgısını uyaranlar… Azalmış kan glukoz düzeyi, azalmış serbest yağ asidi, açlık, protein eksikliği, travma, stres, egzersiz, serotonin agonistleri, testosteron, östrojen, derin uyku (Evre III-IV non-REM), Ghrelin, Glukagon, GHRH, L-arjinin, Alfa-2 agonistler ve Beta blokerler",
+            "193. GH salgısını baskılayanlar… Artmış kan glukoz düzeyi, artmış serbest yağ asidi, yaşlanma, şişmanlık, somatostatin, IGF-1, GH (ekzojen), REM uykusu, gebelik, kortizol türevleri, oktreotid",
+            "194. Vazopressin (ADH) salgısını artıranlar… Plazma osmotik basıncı artışı, ekstrasellüler sıvı volüm azalması, ağrı, stres, egzersiz, bulantı, kusma, ayakta durma, klofibrat, karbamazepin, anjiyotensin II",
+            "195. Vazopressin (ADH) salgısını azaltanlar… Plazma osmotik basınçta düşme, ekstrasellüler sıvı volüm artışı, alkol, klonidin, haloperidol",
+            "196. ADH'nin damar düz kaslarında kasılmaya neden olduğu reseptör ve ikincil haberci… V1A reseptörü – İnozitol trifosfat, kalsiyum",
+            "197. İnsülin sekrete eden Beta hücrelerinde sekresyondan sorumlu olan kanal… ATP bağımlı Potasyum kanalı",
+            "198. GLUT-1… Bazal glukoz alımı - Plasenta, kan-beyin bariyeri, beyin, eritrositler, böbrek, kolon",
+            "199. GLUT-2… B hücre glukoz taşıyıcısı, bağırsak ve böbrek epitel hücrelerinden çıkış - Adacık B hücreleri, karaciğer, ince bağırsak epiteli, böbrekler",
+            "200. GLUT-3… Bazal glukoz alımı - Beyin, plasenta, böbrekler",
+            "201. GLUT-4… İnsülinle uyarılan glukoz alımı - İskelet ve kalp kası, yağ dokusu",
+            "202. GLUT-5… Fruktoz taşınımı - Jejunum, sperm",
+            "203. Glukozun eritrositlere girişine aracılık eden hücre zarı proteini… GLUT-1",
+            "204. Sperm ve jejunumda bulunan ve esas fonksiyonu fruktoz taşıyıcılığı olan protein… GLUT-5",
+            "205. Tiroid hormonu 3 şeyi azaltır… Kiloyu (kilo kaybı), Kolesterolü, Periferik direnci/diyastolik basıncı",
+            "206. Tiroid hormonu, mitokondri sayısını… Artırır",
+            "207. Tiroid hormonu, uncoupling protein sentezini… Artırır",
+            "208. Tiroid hormonu, beta adrenerjik reseptör sayısını… Artırır",
+            "209. Tiroid hormonu, Na⁺/K⁺ ATPaz pompasının aktivitesini… Artırır",
+            "210. Sirkadyen (diürnal) ritimden sorumlu bez… Pineal (epifiz)",
+            "211. Sirkadyen ritimden sorumlu hormon… Melatonin",
+            "212. Sirkadyen ritimden sorumlu nukleus… Suprakiazmatik nukleus",
+            "213. Solunum yollarında hiyalin kıkırdak bulunan yapılar… Trakea ve bronş",
+            "214. Laringeal kıkırdaklardan hiyalin kıkırdak yapısındakiler… Tiroid, krikoid, aritenoid (-id ile bitenler)",
+            "215. Laringeal kıkırdaklardan elastik kıkırdak yapısındakiler… Kuneiform, kornikulat",
+            "216. Epiglottis hangi tip kıkırdak örneğidir… Elastik kıkırdak",
+            "217. Bronşiyolde rejenerasyon yapan hücre… Clara hücresi",
+            "218. Alveolde tamir yeteneği olan (rejenerasyon, onarım) hücre… Tip II pnömosit",
+            "219. Tüm solunum yollarında kök hücre… Bazal hücre",
+            "220. İnspirasyon sırasında intraplevral basıncın negatifliği… Artar",
+            "221. İnspirasyon sırasında transpulmoner basınç… Artar",
+            "222. Alveollerin kollabe olmasını engelleyen… Sürfaktan",
+            "223. Hipokseminin direkt etkileyip hiperventilasyon oluşturduğu reseptör… Karotis ve aorta kemoreseptörleri",
+            "224. Alveol kesesinin kollabe olmasını engelleyen surfaktanın salgılandığı hücre… Tip II Pnömosit",
+            "225. Deniz seviyesinde yaşayan, hemoglobin düzeyi 15 g/dL olan erişkin sağlıklı bir bireyin arteriyel kan parsiyel oksijen basıncı düzeyinin kaç mmHg olması beklenir… 95",
+            "226. Hem inspiratuvar hem de ekspiratuvar nöron somalarını içeren solunum merkezi… Ventral solunum merkezi",
+            "227. Dorsal solunum grubu… Nükleus traktus solitaryusta, Pre-Bötzinger kompleksi, 2 sn ins / 3 sn eks (Rampa sinyali), Sakin solunum ritmi",
+            "228. Ventral solunum grubu… Normalde aktif değil, I ve E nöronları, Zorlu ins / Zorlu eksp, Egzersizde aşırı uyarı",
+            "229. Pnömotaksik merkez… Pons üst-arkasında, Solunum hızı ve derinliği, Apnöstik merkezi inhibe",
+            "230. Telensefalon'dan gelişenler… Serebral hemisferler, bazal gangliyonlar (kaudat, putamen, globus pallidus), amygdaloid, klaustrum, lamina terminalis, bulbus olfactorius, hippocampus",
+            "231. Diensefalon'dan gelişenler… Epitalamus, subtalamus, talamus, hipotalamus, mamiller cisimler, nörohipofiz, infindibulum, pineal (epifiz) bez, retina, iris, siliyer cisim, chiasma opticum, tractus opticus",
+            "232. Mezensefalon'dan gelişenler… Orta beyin",
+            "233. Metensefalon'dan gelişenler… Pons, Serebellum",
+            "234. Miyelensefalon'dan gelişenler… Medulla oblongata",
+            "235. Kortekste en çok bulunan nöron tipi… Piramidal nöron (multipolar)",
+            "236. Santral sinir sisteminde bulunmayan glia… Satellit ve Schwann",
+            "237. Kan beyin bariyerinin elemanları… Endotel ve astrosit",
+            "238. İyon kanalı bağlantılı reseptörler… Glisin A, glutamat (NMDA-AMPA-kainat), ACh-Nikotinik, serotonin-5HT3, GABA A-C",
+            "239. Sinaptotagmine karşı antikor verildiğinde bozulan sinaptik işlev… Sinaptik vezikülün sinaptik aralığa boşalması",
+            "240. Akson hasarlanmasından sonra sinir hücre gövdesinin şişmesi ve organellerinin özelliklerinin yeniden düzenlenmesi… Kromatolizis",
+            "241. Basınca en duyarlı sinir lifi… A tipi",
+            "242. Hipoksiye en duyarlı sinir lifi… B tipi",
+            "243. Lokal anesteziklere en duyarlı sinir lifi… C tipi",
+            "244. En hızlı ileten sinir lifi… A-alfa (70-120 m/sn)",
+            "245. En yavaş ileten sinir lifi… C tipi (0.5-2 m/sn) - Yavaş ağrı, sıcak, kaşınma",
+            "246. M1, M3, M5, alfa-1 reseptörleri… Gq - IP3-Ca²⁺ yolağı",
+            "247. M2, M4, alfa-2 reseptörleri… Gi - cAMP azalır",
+            "248. Beta (1,2,3) reseptörleri… Gs - cAMP artar",
+            "249. Substantia Nigra lezyonu… Parkinson",
+            "250. Putamen lezyonu… Huntington",
+            "251. Pallidus lezyonu… Atetosis",
+            "252. Subtalamus lezyonu… Ballismus",
+            "253. Wilson hastalığı (Bakır)… Putamen hasarı (Kayser-Fleischer halkası)",
+            "254. Nöroleptik (Haloperidol)… Striatum hasarı (Tardiv diskinezi)",
+            "255. Kas iğcikleri ve Golgi tendon organlarından tip Ia ve tip Ib lifleriyle iletilen duyusal bilginin, santral sinir sistemine taşındığı yol… Spinoserebellar yol",
+            "256. Brown-Sequard sendromunda karşı tarafta kaybolan duyular… ALS ile taşınan: Ağrı, sıcak ve soğuk",
+            "257. Brown-Sequard sendromunda aynı tarafta kaybolan duyular… DKML ile taşınan: Propriosepsiyon, pozisyon, vibrasyon, hassas lokalizasyon ve iki nokta ayrımı",
+            "258. İştahı azaltanlar (Anoreksijenik)… Leptin, Serotonin, Somatostatin, İnsülin, Kolesistokinin, Oksitosin, Norepinefrin, Histamin, CRH, GLP, CART, PYY, α-MSH",
+            "259. İştahı artıranlar (Oreksijenik)… Nöropeptit Y (NPY), Ghrelin, Oreksin A ve B, Kortizol, Endorfinler, Galanin, Aminoasitler (Glutamat ve GABA), MCH, Endokannabinoid, AGRP",
+            "260. Anjiyotensin II'nin reseptörlerine bağlanarak susamayı tetikleyen beyin bölgesi… Subfornikal organ",
+            "261. Lens nereden gelişir… Yüzey ektoderm",
+            "262. Retina, iris epiteli, dilatator ve irisin sfinkter pupillası, silyer cisim epiteli… Optik kadeh (nöroektoderm)",
+            "263. EEG'de bifazik K kompleksleri… NonREM evre II",
+            "264. Desenkronize uyku evresi… REM",
+            "265. 45°C'nin üzerindeki sıcaklıklar algılanamıyorsa hangi kanalların yokluğu mevcuttur… TRPV1",
+            "266. Endojen analjezik etkisi bulunan nörotransmitter… Serotonin",
+            "267. Sağ paryetal korteks lezyonunda ortaya çıkan klinik bulgular… Neglect sendromu - Vücudunun sol tarafını kullanmaktan kaçınır, sol tarafın bakımını yapmaz, sol tarafı ihmal eder",
+            "268. İç pleksiform tabakasında sinapsa katılanlar… Bipolar, amakrin, ganglion",
+            "269. Dış pleksiform tabakasında sinapsa katılanlar… Bipolar, horizontal, koni, basil",
+            "270. Kan retina bariyerinin oluşumu ve fagositozda görevli… Pigment hücresi",
+            "271. Retinada bulunan ve astrosit ile benzer işlevsel özelliğe sahip olan hücre… Müller hücresi",
+            "272. Görme mekanizması… 11-cis retinalin all-trans retinale dönüşümü → Transdusinin aktivasyonu → cGMP miktarında azalma → Na⁺ kanallarının kapanması → Hiperpolarizasyon",
+            "273. Otik vezikülden (ektoderm) gelişenler… Utrikül, semisirküler kanallar, CN VIII vestibüler ganglion, endolenfatik kanal ve kese, Sakkül, Kohlear kanal (Korti organı), CN VIII spiral ganglion",
+            "274. Stapes nereye tutunur… Oval pencere",
+            "275. Endokoklear potansiyelden sorumlu kanal… Potasyum kanalı",
+            "276. Hasarında yüksek frekanslı sesleri işitmenin bozulduğu yer… Baziler membran oval pencereye yakın kısım",
+            "277. Tektoriyal membran, hangi iç kulak bölümünde bulunur… Kohlea",
+            "278. Ekstraselüler sıvıda en fazla katyon ve anyon… Na (katyon), Cl (anyon)",
+            "279. Hücre dışı / içi oranı en fazla olan iyon… Ca",
+            "280. Üreter ve mesaneyi döşeyen… Değişici Epitel",
+            "281. GFR ölçümü için kullanılan maddeler… İnülin, Kreatinin, Radyoiyot",
+            "282. Böbrek plazma akımı ölçümü için kullanılan maddeler… Diodrast ve PAH",
+            "283. Renal otoregülasyonda görev alan ve azalmış olan GFR'yi normale döndüren mediyatör… Adenozin",
+            "284. Hipokalemi yapan faktörler… İnsülin, Aldosteron, Adrenerjik stimülasyon, Alkaloz",
+            "285. Hiperkalemi yapan faktörler… İnsülin yetersizliği, Aldosteron yetersizliği, Adrenerjik blokaj, Asidoz, Hücre lizisi, Şiddetli egzersiz, Yanık",
+            "286. İnen Henle'de üre taşıyıcısı… UTA-2",
+            "287. Medüller tübülde ve ADH duyarlı üre taşıyıcıları… UTA-1 ve UTA-3",
+            "288. Eritrosit ve vaza rektadaki üre taşıyıcı… UTB",
+            "289. Filtrata geçen suyun en büyük kısmı nerede geri emilir… Proksimal tübüllerde",
+            "290. Henle kulbunun inen kolu büyük oranda neye geçirgen… Suya",
+            "291. Henle kulbunun çıkan kolu büyük oranda neye geçirgen… Sodyum, potasyum ve klora",
+            "292. Henle kulbunun çıkan kolu neye geçirgen değil… Suya",
+            "293. Suyun antidiüretik hormon kontrolünde geri emildiği tübül segmenti… Toplayıcı kanallar",
+            "294. Suyun aldosteron etkisi ile sodyum emilimine eşlik ettiği tübül kısmı… Distal tübül"
+        ];
+
+        let currentSubject = '';
+        let slides = [];
         let current = 0;
         let playing = true;
         let timeLeft = 7;
         let testMode = false;
         let revealed = false;
         let timer;
+
+        function startQuiz(subject) {
+            currentSubject = subject;
+            slides = subject === 'patoloji' ? patolojiSlides : fizyolojiSlides;
+            current = 0;
+            
+            document.getElementById('homeScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'block';
+            document.getElementById('subjectIndicator').textContent = subject === 'patoloji' ? '🔬 Patoloji' : '🧬 Fizyoloji';
+            
+            show(0);
+        }
+
+        function goHome() {
+            stopTimer();
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('homeScreen').style.display = 'flex';
+            testMode = false;
+            document.getElementById('testBtn').textContent = '🧠 Test: OFF';
+            document.getElementById('testBtn').classList.remove('active');
+            playing = true;
+            document.getElementById('playBtn').textContent = '⏸';
+        }
 
         function show(i) {
             if (i < 0 || i >= slides.length) return;
@@ -508,6 +919,8 @@
 
         // Keyboard
         document.addEventListener('keydown', e => {
+            if (document.getElementById('homeScreen').style.display !== 'none') return;
+            
             if (e.key === 'ArrowRight' || e.key === ' ') {
                 e.preventDefault();
                 next();
@@ -516,6 +929,8 @@
                 prev();
             } else if (e.key === 'p' || e.key === 'P') {
                 togglePlay();
+            } else if (e.key === 'Escape') {
+                goHome();
             }
         });
 
@@ -523,9 +938,6 @@
         if ('wakeLock' in navigator) {
             navigator.wakeLock.request('screen').catch(() => {});
         }
-
-        // Initialize
-        show(0);
     </script>
 </body>
 </html>
