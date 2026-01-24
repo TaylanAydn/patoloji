@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="TUS Çalışma">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23000' width='100' height='100'/><text y='70' font-size='60' fill='%23fff' text-anchor='middle' x='50'>📚</text></svg>">
+    <meta name="apple-mobile-web-app-title" content="DUS Çalışma">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23000' width='100' height='100'/><text y='70' font-size='60' fill='%23fff' text-anchor='middle' x='50'>🦷</text></svg>">
     <title>DUS Çalışma</title>
     <style>
         * {
@@ -35,15 +35,15 @@
 
         .home-title {
             font-size: 32px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             text-align: center;
         }
 
         .subject-btn {
             width: 280px;
-            padding: 25px 40px;
-            margin: 15px;
-            font-size: 24px;
+            padding: 20px 40px;
+            margin: 10px;
+            font-size: 22px;
             border: 2px solid #fff;
             border-radius: 15px;
             background: rgba(255,255,255,0.1);
@@ -65,6 +65,11 @@
         .subject-btn.fizyoloji {
             border-color: #4ecdc4;
             color: #4ecdc4;
+        }
+
+        .subject-btn.mikrobiyoloji {
+            border-color: #a855f7;
+            color: #a855f7;
         }
 
         /* Quiz Screen Styles */
@@ -241,9 +246,10 @@
 <body>
     <!-- Home Screen -->
     <div class="home-screen" id="homeScreen">
-        <h1 class="home-title">📚 TUS Çalışma</h1>
+        <h1 class="home-title">🦷 DUS Çalışma</h1>
         <button class="subject-btn patoloji" onclick="startQuiz('patoloji')">🔬 Patoloji</button>
         <button class="subject-btn fizyoloji" onclick="startQuiz('fizyoloji')">🧬 Fizyoloji</button>
+        <button class="subject-btn mikrobiyoloji" onclick="startQuiz('mikrobiyoloji')">🦠 Mikrobiyoloji</button>
     </div>
 
     <!-- Quiz Screen -->
@@ -793,6 +799,463 @@
             "294. Suyun aldosteron etkisi ile sodyum emilimine eşlik ettiği tübül kısmı… Distal tübül"
         ];
 
+        // Mikrobiyoloji Slides
+        const mikrobiyolojiSlides = [
+            "1. Bakterileri diğer mikroorganizmalardan ayıran temel özellik… Prokaryot olmaları",
+            "2. DNA ve RNA'nın ikisini birden içermeyen canlı… Virüs (ve viroid, virüsoid)",
+            "3. Bakteri hücresi ile protozoon hücresinin ortak özelliği… Genetik materyalin kimyasal kompozisyonu",
+            `4. Esansiyel Yapı - Prokaryot vs Ökaryot:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th></th><th>PROKARYOT</th><th>ÖKARYOT</th></tr>
+<tr><td>Hücre membranı</td><td>Sterolsüz (2 tabakalı)</td><td>Sterollü</td></tr>
+<tr><td>Hücre duvarı</td><td>Peptidoglikanlı</td><td>Yok</td></tr>
+<tr><td>Kromozom</td><td>Haploid (çift iplikli sirküler DNA)</td><td>Diploid</td></tr>
+<tr><td>Ribozom</td><td>70S (50S+30S)</td><td>80S (60S+40S)</td></tr>
+</table>
+</div>`,
+            "5. Mutasyondan en az etkilenen ve bakteri sınıflandırılmasında en duyarlı yöntem… 16S rRNA analizi",
+            "6. Gram negatif bakteri duvarında bulunmayan yapı… Teikoik asit",
+            "7. Sadece gram negatif bakterilerde bulunan yapılar… Dış membran, lipopolisakkarit (LPS, lipit-A + O antijeni), periplazmik aralık",
+            "8. Gram pozitif hücre duvarında bulunan gliserol veya ribitol fosfat polimerlerinden oluşan antijenik yapı… Teikoik asit",
+            "9. Shwartzman reaksiyonuna yol açan bakteri hücresi yapı taşı… Lipopolisakkarit (hücre parçalanınca)",
+            "10. Bakteri peptidoglikan tetrapeptidinde yer alan amino asitler… L-alanin, D-glutamik a., L-lizin (gram pozitifte) veya mezodiamino pimelik a., D-alanin",
+            "11. Lizozim enziminin antibakteriyel etkisi… Hücre duvarında, peptidoglikan zincirini oluşturan NAMA ile NAGA arasındaki beta 1-4 glikozit bağlarını parçalar",
+            "12. Virüslere karşı korunmada rol oynamayan… Lizozim",
+            "13. Mikoplazmaları L-formu bakterilerden ayıran temel özellik… Hücre membranında sterol bulunması",
+            "14. Hücre duvarı olmayan ve tekrarlayan pasajlarında duvar oluşturamayan bakteri… Mycoplasma, Ureoplasma",
+            "15. Bakterinin hücre duvarını kaybederse kaybettiği bir özellik… Gram boyanma özelliği",
+            "16. Gram negatif bakterilerin hücre duvarında endotoksin aktivitesinden sorumlu olan yapı… Lipit-A",
+            "17. Bakterileri fagositoza karşı koruyan komponent… Kapsül",
+            "18. Gerçek kapsül yapısı… Polisakkarit",
+            `19. Farklı kapsül yapıları…
+
+• Streptococcus pyogenes: Hyaluronik asit
+• Streptococcus agalactiae: Siyalik asit
+• Bacillus anthracis: D-glutamik asit
+• Haemophilus influenzae: Poliribozil ribitol fosfat`,
+            "20. Bakteri hücresindeki protein yapıda olup insan için immünojen yapılar… Flajella, adi pilus ve seks pilusu",
+            `21. Basil olmasına rağmen hareketsiz olan 4 bakteri (AŞIK):
+
+• Acinetobacter
+• Shigella
+• EİEC
+• Klebsiella`,
+            "22. Bakteri sporlarının ısıya dayanıklılığını ve dehidrate olmalarını sağlayan yapı… Kalsiyum dipikolinat",
+            "23. En dirençli ve zayıf bakteri formları… Spor – vejetatif",
+            "24. Sporlu bakteri… Bacillus anthracis, Clostridium spp.",
+            "25. Bakterilerin, antibiyotiklerin etkisine en duyarlı oldukları dönem… Logaritmik büyüme evresi",
+            "26. MacConkey agarın ayrımında kullanıldığı bakteriler ve amacı… Gram negatif basiller - Laktoz fermentasyonu",
+            "27. In vitro kültürlerde üretilemeyenler… Treponema pallidum, Mycobacterium leprae, Spirillum minor, Klebsiella granulomatis",
+            "28. Sadece canlı hücreli besiyerlerinde üretilebilen canlılar… Riketsiya, klamidya, virüsler",
+            `29. Selektif besiyerine gereksinim duyan bazı bakteriler…
+
+• Legionella pneumophila (BCYEA by)
+• Mycoplasma pneumoniae (PPLO by)
+• Campylobacter jejuni (Skirrow by)
+• Bordetella pertussis (Bordet-Gengau by)
+• Neisseria gonorrhoeae (Thayer-Martin by)`,
+            "30. Bakteri genomunda, proteinlerin topluca kodlandığı ve tek bir mRNA transkripti ile ekspresse edildiği bölgeler… Operon",
+            "31. DNA çift sarmalında, helikazın gevşetici etkisiyle oluşan bükülme noktalarını kesip tekrar birleştirerek düzelten enzim… Topoizomeraz",
+            `32. EF-2 toksini ile konak protein sentezini inhibe eden bakteriler…
+
+• Corynebacterium diphtheriae
+• Pseudomonas aeruginosa`,
+            "33. Plazmitlerin (ve hatta bakteriyofajların) ortak özelliği… Kendi kendilerine replike olabilmeleri (replikon)",
+            "34. DNA'ya yapışarak bakteriler arasında genetik şifre taşıyan ve direnç gelişmesinde rol oynayan yapı… Plazmit",
+            "35. Bir bakteriden diğerine plazmit ile aktarılamayan genler… Esansiyel bilgiler (Gram boyanma özelliği, endotoksin yapımı vb.)",
+            "36. Gram boyamada kullanılan boyalar… KLAS (Kristal viyole, Lugol, Alkol, Sulu fuksin)",
+            "37. DNA ve RNA'yı boyayarak canlı bakterileri gösteren floresan boya… Akridin Oranj",
+            "38. Mikobakterilerin tanısında kullanılan, en duyarlı floresan boya… Auramin-Rodamin",
+            "39. Mantar hücre duvarındaki kitine bağlanarak mantarları tanımlamada kullanılan floresan boya… Kalkoflor beyazı",
+            "40. Dokudaki mantarların incelemesinde kullanılan boya… Gomori metenamin gümüşleme",
+            "41. Ekzotoksini nörotoksik etkiye sahip olan bakteri… Clostridium botulinum, Clostridium tetani",
+            "42. Pertussis toksininin etki mekanizması… Adenilat siklazı uyararak hücre içi cAMP'yi arttırmak",
+            "43. Hiçbir toksini bulunmayan bakteri… Mycobacterium tuberculosis",
+            "44. Toksoid aşılar… Difteri–boğmaca(asellüler)–tetanoz",
+            "45. Schwartzman reaksiyonuna yol açan bakteri hücre yapı taşı… Lipopolisakkarit",
+            "46. Cilt florasının en sık rastlanan anaerop etkeni olduğundan, kan kültüründe ancak bir şişede üremesi kontaminasyon lehine değerlendirilen bakteri… Cutibacterium (Propionibacterium) acnes",
+            "47. Cilt temizliğinde en sık kullanılan antiseptikler… Klorheksidin, alkol, iyodin bileşikleri, iyodofor",
+            `48. Yüksek düzey dezenfektanlar (sporlar ve mikobakterilere de etkili)…
+
+• Glutaraldehit
+• Formaldehit
+• Perasetik asit
+• Hidrojen peroksit
+• Etilen oksit`,
+            "49. Sterilizasyona en dirençli enfeksiyöz etken… Prionlar",
+            "50. Dezenfektanlara en dirençli bakteriler (sırasıyla)… Endosporlu bakteriler, Mycobacterium tuberculosis",
+            "51. Düşük düzey dezenfeksiyon ile yok edilen mikroorganizmalar… Zarflı virüsler (HBV, HCV, HIV, RSV, İNFLUENZA)",
+            "52. Hücre duvar sentezini inhibe eden antimikrobiyaller… Beta laktamlar (penisilin, sefalosporin, monobaktam, karbapenem), glikopeptit (vankomisin, teikoplanin), sikloserin, fosfomisin, basitrasin",
+            "53. Penisilinler aşağıdaki bakteriyel yapılardan hangisine bağlanarak etki gösterir… Sitoplazmik membran proteinleri (penisilin bağlayan protein, PBP)",
+            "54. Beta-laktam bir antibiyotik olmasına rağmen gram pozitif bakterilere etkisiz olan… Aztreonam",
+            "55. N-asetil muramik asit ve N-asetil glukozaminin sitoplazma membranından periplazmik alana geçişini engelleyerek hücre duvar sentezini inhibe eden antibiyotik… Basitrasin",
+            "56. Bakteride RNA polimeraz enziminde oluşan kromozomal mutasyon sonucu direnç gelişen antibiyotik… Rifampin",
+            `57. Kolistin (Polimiksin-E)…
+
+• Duvardaki endotoksine bağlanıp membrana sabun etkisi yapar
+• Pseudomonas aeruginosa, Acinetobacter baumannii, Klebsiella pneumoniae vb. yoğun bakım etkenlerine etkilidir
+• Gram pozitif bakterilere etkisizdir`,
+            `58. Antibiyotiklere Karşı Geliştirilen Direnç Mekanizmaları:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>ANTİMİKROBİYAL</th><th>DİRENÇ MEKANİZMASI</th></tr>
+<tr><td>Betalaktamlar</td><td>Betalaktamaz üretimi, PBP değişimi</td></tr>
+<tr><td>Glikopeptitler</td><td>Hedef molekülün değişimi (VAN A-G geni)</td></tr>
+<tr><td>Aminoglikozitler</td><td>Enzim ile inaktivasyon (asetil/fosfo/adenil transferaz)</td></tr>
+<tr><td>Kloramfenikol</td><td>Enzim ile inaktivasyon (asetil transferaz)</td></tr>
+<tr><td>Tetrasiklin</td><td>Eflux pompası</td></tr>
+<tr><td>Makrolid/Linkozamid/Streptogramin</td><td>50S ribozomun 23S alt biriminde değişiklik (MLS direnci)</td></tr>
+<tr><td>Rifampisin</td><td>DNA bağımlı RNA polimeraz enziminde değişiklik</td></tr>
+<tr><td>Kinolon</td><td>DNA giraz (topoizomeraz 2) enziminde değişiklik</td></tr>
+<tr><td>Sülfonamid/Trimetoprim</td><td>Yeni dihidropteroat sentetaz sentezi / Yeni dihidrofolat redüktaz sentezi</td></tr>
+</table>
+</div>`,
+            "59. Aşıları kapsül kullanılarak üretilen bakteriler… S.pneumoniae, Neisseria meningitidis, Haemophilus influenzae",
+            "60. Oral polio aşısıyla aşılanan bir çocukta, bağışıklık yanıtının ortaya çıktığı lenfoid organ… Peyer plakları",
+            "61. Stafilokok enterotoksin tiplerinden psödomembranöz enterokolite neden olan… Enterotoksin-B",
+            "62. IgG'nin, Fc parçasına bağlanarak Staphylococcus aureus'un fagositozdan kaçmasını sağlayan virülans faktörü… Protein-A",
+            "63. Staphylococcus aureus'un protein A'sının antikorların Fc kısmını yakalaması sayesinde geliştirilen serolojik yöntem… Koaglütinasyon",
+            "64. Stafilokokları fagositoz sonrası fagositik hücre içinde oluşan hidrojen peroksitin zararlı etkisine karşı koruyan enzim… Katalaz",
+            "65. Tuzlu mannitollü Chapmann besiyerinde sarı koloniler oluşturarak üreyen Gram pozitif kok… Staphylococcus aureus",
+            `66. S. aureus'un A'ları:
+
+1) A proteini
+2) Altın rengi pigment
+3) Apse
+4) Akut endokardit
+5) Akut besin zehirlenmesi
+6) Asteomiyelit
+7) Artrit
+8) Aşlanmış deri sendromu
+9) Astane, pastane bakterisi
+10) A mec geni (PBP değişikliği)
+11) Anne (H. influenzae'nin süt annesi)
+12) Antibiyotik ishali (2 yaş altı bebeklerde)
+13) Aşk toksini (Panton-Valentin toksini)`,
+            "67. Metisiline dirençli Staphylococcus aureus tedavisinde kullanılabilecek en uygun antibiyotik… Vankomisin, teikoplanin (telavansin, dalbavansin, oritavansin)",
+            "68. Ventriküloatriyel şantlı bireylerde en olası endokardit ve bakteriyemi etkeni ve alınacak örnek… Staphylococcus epidermidis, kan",
+            "69. Genç kadın balayı sistitlerine neden olan, cinsel temasla bulaşan, katalaz pozitif, koagülaz negatif, novobiyosine dirençli, gram pozitif kok… Staphylococcus saprophyticus",
+            `70. Balayı sistitlerinin en sık etkenleri:
+
+• Escherichia coli (%85)
+• Staphylococcus saprophyticus (%5-15)`,
+            "71. AGBHS'nin majör virülans faktörü… M proteni",
+            "72. Beta hemolitik streptokoklar arasında pozitif PYR reaksiyonu veren… AGBHS",
+            "73. Neden olduğu enfeksiyonda ampisiline sülbaktam eklenmesi gerekmeyen bakteri… AGBHS",
+            "74. Safen ven grefti alınan bölge cildinde gelişen tekrarlı sellülitlerin etkeni ve tedavisi… Non-A (B, C, G) grup streptokok – penisilin-G",
+            "75. Yenidoğan kanından izole edilen, beta hemolitik, katalaz negatif, CAMP (+) ve hippurat hidrolizi yapan, basitrasin ve trimetoprim-sulfametoksazole dirençli bakteri… Grup B streptokoklar",
+            `76. Yenidoğanda menenjit etkenleri (CAMPisilin):
+
+• CAMP negatif: E. coli K1, Listeria
+• CAMP pozitif: B grubu streptokok`,
+            "77. İdrar yolu enfeksiyonu/Endokarditi olan hastada, nonhemolitik, katalaz negatif, safralı–eskulinli besiyerinde ve %6,5 NaCl besiyerinde üreyen gram pozitif kok… Enterococcus faecalis",
+            `78. Sefalosporinlere doğal dirençli bakteriler…
+
+• Enterokoklar
+• Listeria
+• Legionella`,
+            "79. Romatizmal kapak hastalığı olan bir kişide diş çekimini takiben enfektif endokardit gelişiyorsa etkeni… Viridans streptokok",
+            "80. Öksürük, ateş, plevral ağrı ve balgam çıkarma şikayetleri olan hastanın balgam örneğinde; alfa hemolitik koloniler ürediyse bu etkenin kesin tanı testi… Optokin duyarlılığı",
+            "81. Streptococcus pneumoniae, Haemophilus influenzae ve Neisseria meningitidis'in ortak virülans faktörü… Kapsül",
+            "82. Pnömokokların laboratuvarda en kesin tanı yöntemi… Kapsül şişme reaksiyonu",
+            "83. Ödem üzerindeki vezikül sıvısında gram pozitif zincir yapan basiller ve lökositler saptanan; metilen mavisi ile boyandığında pembe kapsül görülen hastada, en olası etken… Bacillus anthracis",
+            "84. Travma sonrası çizgili kaslarda, çene adalelerinde spazm, ensede sertlik, yaygın, ağrılı paroksismal adale kasılmaları varsa; ateş ve şuur normalse… Tetanoz",
+            "85. Tetanozda ilk saptanan bulgu… Trismus",
+            "86. Evde hazırlanmış konserve yiyen bir kişide 24 saat sonra bulantı-kusma, karın ağrısı, bulanık görme (akomodasyon bozukluğu), pitozis, dilate pupiller ve paralizi… Botulizm (Clostridium botulinum)",
+            "87. Hem gazlı gangrene hem de gastroenterite neden olan bakteri… Clostridium perfringens",
+            "88. Psödomembranöz enterokolitin etkeni ve kesin tanı yöntemi… Dışkıda enterotoksinin (toksin A ve B) ELISA testiyle gösterilmesi",
+            "89. Akciğer apsesi tanısıyla yatırılan erkek hastanın apse örneğinde gram pozitif dallanmış, Modifiye EZN yöntemiyle aside dirençli boyanan, ince ipliksi basiller… Nocardia",
+            `90. Gram pozitif dallanan filamentöz (ipliksi) basiller:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Nocardia</th><th>Actinomyces</th></tr>
+<tr><td>Aerop</td><td>Anaerop</td></tr>
+<tr><td>EZN pozitif</td><td>EZN negatif</td></tr>
+<tr><td>Çevresel bakteri</td><td>Flora bakterisi</td></tr>
+<tr><td>Eksojen</td><td>Endojen</td></tr>
+<tr><td>İmmünsüpresif konak</td><td>İmmünkompetan konak</td></tr>
+<tr><td>Fırsatçı patojen</td><td>Primer patojen</td></tr>
+<tr><td>Kotrimoksazol/Karbapenem</td><td>Penisilin</td></tr>
+</table>
+</div>`,
+            "91. Akut menenjit kliniği olan hastanın BOS tetkikinde bol nötrofil, glukoz azalmış, protein artmış ve gram negatif diplokok varsa en olası etken ve en uygun antibiyotik… Neisseria meningitidis – İV kristalize penisilin",
+            "92. Waterhouse-Friderichsen sendromu etkeni bakteri… Meningokok (C5-9 eksikliğinde daha fazla)",
+            "93. Normalde nazofarinks mukozasında bulunan, akut sinüzit, otit, bronşit ve pnömonilerin gelişimine neden olan, beta laktamaz ve DNAaz üretebilen bakteri… Moraxella catarrhalis",
+            "94. Geniş spektrumlu beta laktamaz (GSBL) üreten Escherichia coli'ye bağlı bakteriyemi tedavisinde en uygun antibiyotik… Ertapenem (Pseudomonas'a etkisizdir)",
+            "95. İnsan kaynaklı enfeksiyon etkenleri… Shigella, Vibrio cholerae, Salmonella typhi, Salmonella paratyphiler, Bordetella pertussis, Bordetella parapertussis",
+            "96. Üreaz enzimleri ile üriner sistem enfeksiyonuna seyrinde böbrek taşı oluşumunu kolaylaştıran bakteri… Proteus",
+            "97. Biyoterörizm ajanları ile oluşan hastalıklardan hangisinin insandan insana bulaşma olasılığı çok yüksektir… Primer pnömonik veba",
+            "98. Prostatektomi sonrası 39,5 °C ateş, kan kültüründe laktoz pozitif, oda sıcaklığında bekletildiğinde kırmızı pigment oluşturan bakteri… Serratia marcescens",
+            `99. Gram (-) çomaklarda tipik koloni yapıları:
+
+• Metalik refle: E.coli
+• Laktoz (+) koloni: E.coli, Klebsiella, Enterobacter
+• Laktoz (-) koloni: Salmonella, Shigella
+• Mukoid koloni (kapsül): Klebsiella
+• Yayılan koloni (swarming): Proteus
+• Kırmızı pigment: Serratia
+• Yeşil pigment: Pseudomonas`,
+            "100. Pirinç yıkantı suyu şeklinde diyaresi olan hastanın dışkısının karanlık alan mikroskobisinde hızlı, hareketli (uçuşan sinek manzaralı) mikroorganizmalar… Vibrio cholerae",
+            "101. Tavuk yedikten 12 saat sonra şiddetli kramp tarzında karın ağrısı, ishal, gaita mikroskobisinde gram negatif spiral, martı kanadı şeklinde mikroorganizmalar… Campylobacter jejuni",
+            "102. Kronik aktif gastrit, gastrik ve duodenal ülsere neden olan Helicobacter pylori'nin en temel ayırt edici özelliği… Hareketli ve üreaz testinin pozitif olması",
+            "103. Pastörize olmamış süt ve süt ürünleri ile bulaşan etkenler… Brucella melitensis, Campylobacter jejuni, Salmonella enterica, Listeria monocytogenes",
+            "104. Kan kültüründe, kanlı agarda hemoliz yapmayan ve eozin-metilen mavisi agarda üremeyen, çikolata agarda üreyen gram negatif basillerin ayrımı için yapılması gereken inceleme… X ve V faktörlerine gereksinim",
+            "105. Kemik iliği kültüründe, kanlı agarda üreyebilen hareketsiz, oksidaz, katalaz, üreaz pozitif, gram negatif kokobasiller… Brucella spp.",
+            "106. Bruselloz tanısında en sık kullanılan test… Wright tüp aglütinasyon testi",
+            "107. Bordetella pertussis'in solunum yolları mukozasına tutunmasını sağlayan virülans faktörü… Filamentöz hemaglütinin",
+            "108. Eksüdatif tonsillofarenjit ve ağrılı servikal lenfadenit gelişen ve oral penisilin tedavisine yanıt alınamayan hastada, sistein içeren kanlı agarda üreyen gram negatif kokobasil… Francisella tularensis",
+            "109. Hastanede yatan hastalarda pnömoniye neden olan, karbonhidratları fermente etmeyen, yeşil pigment oluşturan, oksidaz pozitif, gram negatif basil… Pseudomonas aeruginosa",
+            "110. Non-fermentatif, katalaz pozitif, oksidaz negatif, hareketli, kültürleri amonyak kokan, ko-trimoksazole duyarlı gram negatif fırsatçı hastane etkeni basil… Stenotrophomonas maltophilia",
+            "111. Yoğun bakımda yatan ventilatör pnömonili hastada; non-fermentatif, oksidaz negatif, hareketsiz, gram negatif kokobasil… Acinetobacter baumannii",
+            "112. Riskli cinsel temas sonrası yavaş ilerleyen, ağrısız, genişleyen ülserler, ülser kazıntısında Donovan cisimciği… Granuloma inguinale (Calymmatobacterium granulomatis)",
+            "113. Gri renkli, balık kokulu vajinal akıntısı olan genç kadında akıntı pH'ı 5, mikroskobik incelemede clue cells… Bakteriyel vajinoz (Gardnerella vaginalis + Mobiluncus)",
+            "114. Pnömoni tanılı hastanın balgam yaymasında bol nötrofil saptanıyor, mikroorganizma görülemiyor, penisilin tedavisine yanıt alınamıyorsa… Legionella pneumophila (Gram yöntemiyle boyanmaz)",
+            "115. Tanısında BCYE agar kullanılan etkenler… Legionella, Francisella, Nocardia",
+            `116. HACEK grubu bakterileri:
+
+• Haemophilus parainfluenzae
+• Aggregatibacter actinomycetemcomitans, Aggregatibacter aphrophilus
+• Cardiobacterium hominis
+• Eikenella corrodens (insan ısırığı ve yumruk yarası etkeni)
+• Kingella kingae (< 4 yaşta septik artrit etkeni)`,
+            "117. Pastörize olmamış süt ürünleri ile bulaşan etkenler… Brucella melitensis, Campylobacter jejuni, Salmonella enteritidis, Listeria monocytogenes",
+            "118. Erken dönemde eritema migrans, geç dönemde artralji ve artrite neden olan spiral şeklindeki mikroorganizma… Borrelia burgdorferi",
+            "119. Hastada kuru öksürük, az miktarda balgam, ateş, halsizlik, büllöz mirinjit varsa, soğuk aglütinin testi: 1/256… Mycoplasma pneumoniae - Eritromisin, azitromisin, klaritromisin veya tetrasiklin",
+            `120. Tüberküloz (tbc) basil kompleksi içinde yer alanlar…
+
+• Mycobacterium tuberculosis
+• Mycobacterium bovis
+• Mycobacterium microti
+• Mycobacterium africanum
+• Mycobacterium canetti
+• Mycobacterium caprae`,
+            "121. Eklem protezi ve ventriküloperitoneal şantı olan hastalarda enfeksiyona neden olabilen gram pozitif anaerop basil… Propionibacterium acnes",
+            "122. Solunum yolu örneklerinde anaerobik kültür uygun olmayan örnekler… Balgam, nazofarinks sürüntüsü, boğaz sürüntüsü, BAL, endotrakeal aspirat",
+            `123. Mantar hücre duvarında:
+
+• Kitin (çok sayıda NAGA): Küflerde bulunur
+• Mannan (Mannoz polimeri): Mayalarda bulunur
+• Glukan (Glukoz polimeri): Tüm mantarlarda var (Cryptococcus ve Zygomycetes hariç)`,
+            "124. Mantar hücre membranında: Ergosterol vardır",
+            `125. Mantar sporları:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Eşeyli Sporlar</th><th>Eşeysiz Sporlar</th></tr>
+<tr><td>Bazidiospor (BAZI)</td><td>Sporangiospor (Zygomycetes)</td></tr>
+<tr><td>Askospor (AŞKLAR)</td><td>Artrospor (C.immitis)</td></tr>
+<tr><td>Zigospor (ZİGOT)</td><td>Klamidospor (C. albicans ve dubliniensis)</td></tr>
+<tr><td>Oospor (OLUŞTURUR)</td><td>Blastospor, Klamidospor</td></tr>
+</table>
+</div>`,
+            "126. Tanısında (1-3)-beta-D-glukan testi kullanılamayan mantar enfeksiyonları… Kriptokokkoz, mukormikoz",
+            "127. Hücre duvarında melanin içeren mantarların gösterilmesinde… Fontana-Masson boyası",
+            "128. Mantar yapılarının gösterilmesinde kullanılan floresan boya… Kalkoflor beyazı",
+            `129. Termal dimorfizm gösteren mantarlar (HSBC – ParaPeni/Tl):
+
+• Histoplasma capsulatum
+• Sporothrix schenckii
+• Blastomyces dermatitidis
+• Coccidioides immitis
+• Paracoccidioides brasiliensis
+• Penicilium (Talaromyces) marneffei`,
+            `130. Doğal antifungal direnci:
+
+• Candida krusei: Flukanozol
+• Candida lusitaniae: Amfoterisin-B`,
+            "131. Amfoterisin B'nin mantar hücresi üzerindeki etkisi… Hücre membranında bulunan ergosterole bağlanma",
+            `132. Mantarların tanısında sık kullanılan besiyerleri:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Besiyeri</th><th>Kullanım Alanı</th></tr>
+<tr><td>Sabouraud Dekstroz agar</td><td>Mantarların izolasyon ve üretilmesinde kullanılan genel besiyeri</td></tr>
+<tr><td>Zeytin yağlı Sabouraud Dekstroz agar</td><td>Malassezia spp. üretilmesinde</td></tr>
+<tr><td>CHROMagar</td><td>Candida türlerinin ayrımında</td></tr>
+<tr><td>Mısır unlu agar</td><td>C. albicans'ta klamidospor oluşturmak için</td></tr>
+<tr><td>Czapek Dox agar</td><td>Penicillium, Aspergillus araştırmalarında</td></tr>
+<tr><td>Mikobiyotik agar</td><td>Dermatofitlerin ayrımı için (Siklohekzimid içerir)</td></tr>
+<tr><td>Niger Seed (Bird Seed) agar</td><td>Cryptococcus neoformans ve Cryptococcus gattii tanısında</td></tr>
+</table>
+</div>`,
+            "133. Keratinize dokuda enfeksiyon oluşturmasına karşın in vitro koşullarda üreyebilmesi için lipide gereksinim duyan maya mantarı… Malassezia furfur",
+            "134. Hematolojik malignitesi olanlarda özellikle kateterleri tutan, non-Candida maya enfeksiyonlarının en sık etkeni… Trichosporon asahii",
+            "135. Travma yoluyla vücuda giren, morfolojik olarak küçük, mobil ve hassas olmayan subkutan nodüller yapan mantar… Sporothrix schenckii",
+            "136. Geliştirdiği enfeksiyonlarda sklerotik cisimcik gözlenen mantarlar… Kromoblastomikoz etkenleri (Fonsecaea, Cladosporium, Cladophialophora, Phialophora, Rhinocladiella ve Exophiala türleri)",
+            "137. Primer patojen özellik gösteren endemik mikoz etkenleri… Histoplasma capsulatum, Coccidioides immitis, Paracoccidioides brasiliensis, Blastomyces dermatitidis",
+            "138. Cryptococcus neoformans'ta patojeniteye katkıda bulunan özellikler… 37°C'de üreyebilmesi, polisakkarit kapsül oluşturması, melanin üretmesi, fosfolipaz üretmesi",
+            "139. Cryptococcus neoformans kapsülü ile çapraz reaksiyon veren mantar… Trichosporon beigelii",
+            "140. Çini mürekkebi ile negatif boyanan, müsikarmin ile kapsülü boyanan maya mantarı… Cryptococcus neoformans",
+            `141. Candida türlerinin virülans faktörleri…
+
+• Dokulara tutunma (aderans) yeteneği
+• Hücre yüzeyi hidrofobisitesi
+• Proteinaz enzimi yapımı
+• Fenotip değiştirme (maya-hif dönüşümü) yeteneği`,
+            "142. Balgamda septalı, dikotom dallanma gösteren hifleri görülen fırsatçı mikoz etkeni… Aspergillus",
+            "143. Aspergillus familyasından en sık enfeksiyona ve allerjik reaksiyona yol açan tür… Aspergillus fumigatus",
+            "144. Kontrolsüz diyabetli hastada baş ağrısı, ateş, orbital sellülit, yüzdeki nekrotik lezyondan hazırlanan preparatta düzensiz dallanma gösteren, septasız hifler… Rhizopus spp. (Mukormikoz)",
+            "145. HIV(+) pnömonili hastada bronkoalveoler lavaj örneğinin Giemsa ile boyanmasında, 5-12 μm boyutlarında, 4-8 nükleuslu, rozet şeklinde yapılar… Pneumocystis jirovecii pnömonisi",
+            "146. Helmintlerin larval dönemlerinin, vücudunda yerleşip yaşadığı, fakat herhangi bir gelişme gösteremediği konak… Paratenik konak",
+            "147. Plasmodiumlar'ın karaciğere girmesini engellemek amacıyla hazırlanacak olan sıtma aşısının hedeflediği yapı… Sporozoit",
+            "148. Sivrisineklerin biyolojik vektör olarak insana bulaştırabildikleri protozoon ve helmint… Plasmodium vivax, Wuchereria bancrofti",
+            "149. Plasmodiumlar'ın hem sivrisinekte hem de insanda bulunan formu… Sporozoit",
+            "150. Plasmodium türlerinin ve Toxoplasma gondii'nin ara konağı… İnsan",
+            "151. Plasmodium vivax sıtması geçiren kişilerde karaciğerde çoğalmadan kalan ve yıllar sonra relapslara neden olan parazitik form… Hipnozoit",
+            "152. Giemsa veya Wright boyalı ince yayma kan preparatlarında eritrositlerin içinde görülen ve keneler ile bulaşan etken… Babesia microti",
+            "153. Toxoplasma gondii'nin kedide seksüel çoğalma sonucunda oluşan ve dışkısında bulunan enfektif formu… Ookist (içerisindeki sporokistin içindeki sporozoit)",
+            "154. Yenidoğanda hidrosefali, koryoretinit, intrakraniyal kalsifikasyona neden olan hastalık… Konjenital toksoplazmoz",
+            "155. Enfektif formu promastigot olan, tatarcıkların ısırmasıyla bulaşan kan ve doku protozoonu… Leishmania spp.",
+            "156. Primer olarak retiküloendotelyal sistemi enfekte eden protozoon… Leishmania donovani, Leishmania infantum",
+            "157. Kala-Azar tanısı (en iyi yöntem)… Kemik iliği aspiratı ince yaymasında Leishmania formlarının görülmesi",
+            "158. Kala-Azarlı bir hastada laboratuvar bulguları… Hipergamaglobulinemi, sedimentasyon artışı, anemi, trombositopeni, lökopeni",
+            "159. Sadece deride lezyonlar yapan enfeksiyon etkeni… Leishmania tropica",
+            `160. İnsanı hem son hem ara konak olarak seçen parazitler…
+
+• Trichinella spiralis
+• Taenia solium
+• Strongyloides stercoralis`,
+            "161. Chagas hastalığının etkeni… Trypanosoma cruzi",
+            "162. Tanısında ksenodiyagnoz kullanılan paraziter hastalık… Trypanosoma cruzi, Trichinella spiralis",
+            "163. Çekum, sigmoid kolon ve rektum mukozasında ağzı dar şişe gibi tipik ülser yapan etken… Entamoeba histolytica",
+            "164. Entamoeba histolytica enfeksiyonunda kolonda ülserler, nekroz ve mukoza kalınlaşması sonucu oluşan lezyona ne ad verilir… Ameboma",
+            "165. Hasta dışkısında görülen amip trofozoitlerinin patojen olduğunu gösteren en önemli bulgu… Trofozoitler içinde eritrositler görülmesi",
+            "166. İçme sularından bulaşan, yağlı, kötü kokulu ishale yol açan, armut biçimli, kamçılı protozoon… Giardia lamblia",
+            "167. Domuzlardan bulaşan ve dizanteri bulguları veren siliyalı (flajellalı) protozoon… Balantidium coli",
+            "168. Bulaşmasında Enterobius vermicularis yumurtalarının aracılık edebildiği ve yalnızca trofozoiti olan parazit… Dientamoeba fragilis",
+            "169. AIDS'li bir hastada en sık diyareye neden olan ve ARB pozitif boyanan protozoon… Cryptosporidium parvum",
+            "170. Kamçı ile birlikte dalgalanan zarın hareketten sorumlu olduğu protozoonlar… Trichomonas vaginalis, Trypanosoma brucei",
+            `171. İnsana sadece ara konak olarak yerleşen helmintler…
+
+• Echinococcus granulosus (Kist hidatik)
+• Echinococcus multilocularis (Kist hidatik)
+• Ancylostoma brasiliensis (Kutanöz larva migrans)
+• Toxocara canis (Visseral larva migrans)`,
+            "172. Karın ağrısı, iştahsızlık, ishal, dışkıda çift çeperli, polar filamentler ve 3 çift çengelli onkosfer içeren yumurtalar… Hymenolepis nana",
+            "173. Halsizlik, iştahsızlık, sarılık, ERCP'de safra yollarından yaprak şeklindeki parazit… Fasciola hepatica",
+            "174. Deri yolu ile girerek hem idrar yollarına hem de kalın bağırsak ve karaciğere yerleşen, hem erkek hem dişisi olan trematod… Schistosoma spp.",
+            "175. İyi pişmemiş koyun karaciğer yenmesi sonrası dispepsi, dışkıda lugol ile koyu boyanan fasulye tanesi benzeri kapaklı yumurta… Dicrocoelium dendriticum",
+            "176. Balıkta bulunan larvalarının insanlar tarafından alınmasıyla akut allerjik belirtilere neden olan parazit… Anisakis simplex",
+            `177. Akciğerde eozinofili ve pnömoni yapan helmintler:
+
+• Ascaris lumbricoides (larva)
+• Ancylostoma ve Necator americanus (larva)
+• Strongyloides stercoralis (larva)
+• Paragonimus westermani (erişkin)
+• Yolundan saPan akciğere giden parazitler`,
+            "178. İnsan, yavru köpek ve kedi dışkısı ile kontamine topraktan bulaşanlar… Toxocara canis, Ascaris lumbricoides",
+            "179. Tanısında kas biyopsisinden yararlanılan parazit… Trichinella spiralis",
+            "180. DNA ve RNA'nın ikisini birden içermeyen canlı… Virüs",
+            "181. Klamidya ve virüslerin en önemli ortak özelliği… Zorunlu hücre içi paraziti oluşu",
+            `182. Virüs nükleik asitleri:
+
+• DNA virüsleri (parvovirüs ve bocavirüs hariç) çift iplikçikli DNA bulundurur
+• RNA virüsleri (reovirüs hariç) tek iplikçikli RNA bulundurur
+• Tümü haploiddir (Retroviridae ailesi hariç)`,
+            "183. Kapsidi kompleks yapıda olan DNA virüsü… Poksvirüs",
+            "184. İnsanlarda enfeksiyon oluşturan çıplak virüslerin özelliği… Asla helikal simetrili kapside sahip değillerdir (bütün helikal nükleokapsidli virüsler zarflıdır)",
+            `185. Segmentli RNA virüsleri: BORA
+
+• Bunyavirüs
+• Ortomiksovirüs
+• Reovirüs
+• Arenavirüs`,
+            `186. Viral tutunma proteinleri:
+
+• Rinovirüs - VP1, VP2, VP3
+• Adenovirüs - Fiber protein
+• Rotavirüs - VP7
+• Kuduz - G protein
+• HIV - gp120
+• Epstein-Barr virüs - gp350 ve gp220
+• Kızamık - Hemaglütinin
+• Influenza A - Hemaglütinin`,
+            "187. Membran füzyonuyla hücre içine alınan virüsler… Zarflı virüsler",
+            "188. Mutlaka virüs tarafından kodlanan enzimler… Revers transkriptaz, RNA bağımlı RNA polimeraz",
+            "189. Asikloviri monofosforile ederek aktivite kazanmasına neden olan viral enzim… Timidin kinaz",
+            "190. Canlı aşı uygulanmayan durumlar… İmmün süpressifler ve sarı humma aşısı hariç hamileler",
+            "191. Çocuk boğaz ağrısı, baş ağrısı, yüksek ateş, 3 gün sonra sol hemiparezi, konvülsiyon; tomografide sağ temporal lobda kanama, EEG'de düşük dalga paterni… Herpes ensefaliti",
+            `192. TRANS-larda bir numara CMV:
+
+• TRANSfüzyon sonrası (en sık etken)
+• TRANSplantasyon sonrası interstisyel pnömoni ve organ reddi (en sık etken)
+• TRANSplasental (konjenital defektlerin en sık etkeni)`,
+            "193. 0-2 yaş grubunda üç gün yüksek ateş ve konvülsiyon; ateşin düşmesiyle gövdeden başlayan gül rengi döküntüler… Roseola infantum (ekzantem subitum, 6. hastalık)",
+            "194. Epstein-Barr virüsü ile ilişkili neoplaziler… Saçlı oral lökoplaki (benign); nazofarinks ve mide kanseri, Duncan sendromu, Burkitt lenfoma, Hodgkin ve non-Hodgkin lenfomalar, leyomiyosarkom (malign)",
+            "195. Solid organ ve kemik iliği transplantasyonu yapılmış hastalarda hemorajik sistit ve nefrite neden olan virüs… BK virüs",
+            "196. Gastroenterite neden olan virüsler… Adenovirüs tip 40, Rotavirüs, Norwalk virüs",
+            "197. Çocukta ateş, yanaklarda ve gövdede makülopapüler döküntü, dudak çevresinde ve çenede solukluktaistenecek tetkik… Parvovirüs DNA",
+            "198. Tek zincirli DNA içeren virüs… Parvoviridae (Parvovirüs, Bocavirüs)",
+            "199. Herpesvirüslerin tanısında kullanılan en hızlı, en duyarlı ve en özgül yöntem… Moleküler yöntemlerle viral DNA saptanması",
+            "200. Reye sendromu ile ilişkili virüsler… İnfluenza virüsü ve Varicella Zoster Virüs",
+            "201. Oseltamivirin etki mekanizması… Enfekte hücreden virüsün salınması için gerekli olan nöraminidaz enzimini inhibe eder",
+            "202. İnfluenza ve Kızamık'ın hücreye tutunma reseptörü… Siyalik asit",
+            "203. Sokak köpeği tarafından ısırılan ve 8 yıl önce aynı nedenle aşı yapılmış olan bireye uygulanacak kuduz profilaksisi… 0 ve 3. günlerde olmak üzere 2 doz HDCV aşısı",
+            "204. Evde immün yetmezlikli kardeşi olan çocuklara uygulanmaması gereken aşı… OPV",
+            "205. Aynı lokantada yemek yedikten 24 saat sonra ani kusma, ishal ve baş ağrısı ile başvuran çok sayıda hastada gastroenterite neden olan virüs… Norovirüs",
+            "206. Mikroftalmi, miyokardit, glokom, katarakt, sensorinöral işitme kaybı, patent duktus arteriozus (kalpte en sık) gibi bulgularla seyreden intrauterin enfeksiyon etkeni… Kızamıkçık virüsü",
+            "207. Anti-HIV tarama testleri pozitif, doğrulama testi negatif çıkan bireye planlanacak en güvenilir test… PCR ile HIV RNA aranması",
+            "208. Başka bir virüs olmadan üreyemeyen virüs… HDV",
+            `209. Hepatit B markerlerin yorumu:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th></th><th>HBsAg</th><th>Anti-HBc IgM</th><th>Anti-HBc IgG</th><th>Anti-HBs</th></tr>
+<tr><td>Akut hastalık</td><td>+</td><td>+</td><td>+</td><td>-</td></tr>
+<tr><td>Pencere dönemi</td><td>-</td><td>+</td><td>+</td><td>-</td></tr>
+<tr><td>Taşıyıcı-Kronik</td><td>+</td><td>-</td><td>+</td><td>-</td></tr>
+<tr><td>İyileşmiş</td><td>-</td><td>-</td><td>+</td><td>+</td></tr>
+<tr><td>Aşılanmış</td><td>-</td><td>-</td><td>-</td><td>+</td></tr>
+</table>
+</div>`,
+            "210. Primer lenfoid organlar… Kemik iliği, timus",
+            "211. Nükleik asit içermediği halde enfeksiyona neden olan mikroorganizma… Prion",
+            `212. Anti-inflamatuvar sitokinler:
+
+• IL-4
+• IL-10
+• IL-13
+• Transforming growth factor-beta (TGF-beta)`,
+            `213. Fagositoz yapabilen hücreler (MEN):
+
+• Monosit/makrofaj
+• Eozinofil (çok az)
+• Nötrofil (en etkin)`,
+            "214. İmmün süpresyon amacıyla kullanılan kortikosteroidlerin en belirgin etki mekanizmaları… Makrofajlardan sitokin salınımının inhibisyonuyla inflamasyonu azaltmak, IL-2 sinyalizasyonunun inhibisyonuyla lenfosit proliferasyonunu bloke etmek",
+            `215. Antikora bağımlı sitotoksisite özelliği olanlar…
+
+• Nötrofil (bakteri ve mantarlar için)
+• Monosit/makrofaj (bakteri ve mantarlar için)
+• Eozinofil (helmintler için)
+• NK hücre (tümör hücresi ve virüslü hücre için)`,
+            "216. B lenfositlere özgü reseptörler… CD19, 20, 21, 22, MHC-II",
+            "217. Primer T lenfosit cevabını başlatmada en etkili antijen sunucu hücre… Dendritik hücre",
+            "218. MHC class II bulunmayan dendritik hücre… Folliküler dendritik hücre",
+            "219. Deride antijen tanıtıcı hücre olarak görev yapan epidermis hücresi… Langerhans hücreleri",
+            "220. Antijen sunan hücrelerin LFA-3'ü ile bağlanan T lenfosit molekülü… CD2",
+            "221. Taşıyıcı bir proteinle birlikte olduğunda antijenik özellik gösteren küçük moleküler yapıdaki madde… Hapten",
+            "222. J zinciri bulunan immünoglobülinler… IgM, IgA",
+            "223. Opsonin nitelikli antikor… IgG",
+            "224. Fetusta sentezlenen tek antikor… IgM",
+            "225. T lenfositten bağımsız olarak sentezlenen antikor… IgM",
+            `226. Kompleman aktivasyonunun sonuçları:
+
+• Hedef hücre lizisi
+• Kemotaksi, anafilotoksik etki
+• Opsonizasyon
+• İmmün komplekslerin temizlenmesi`,
+            "227. Opsonin özelliği olan kompleman… C3b",
+            "228. MHC sınıf I ve II molekülü bulunmayan hücre… Eritrosit",
+            "229. Uyarılmış T hücrelerde eksprese olan ve CD28 molekülü ile yapısal benzerliği nedeniyle T hücre aktivasyonunu inhibe eden molekül… CTLA-4",
+            "230. Atopi… Tip 1 Aşırı duyarlılık reaksiyonu",
+            "231. Poststreptokoksik glomerulonefrit, poliarteritis nodosa, ekstrensek allerjik alveolit… Tip III ADR",
+            "232. Bir çocukta arı sokması sonucu hipotansiyon ve solunum yetmezliği gelişmesinin nedeni… IgE antikorları"
+        ];
+
         let currentSubject = '';
         let slides = [];
         let current = 0;
@@ -804,12 +1267,23 @@
 
         function startQuiz(subject) {
             currentSubject = subject;
-            slides = subject === 'patoloji' ? patolojiSlides : fizyolojiSlides;
+            if (subject === 'patoloji') {
+                slides = patolojiSlides;
+            } else if (subject === 'fizyoloji') {
+                slides = fizyolojiSlides;
+            } else {
+                slides = mikrobiyolojiSlides;
+            }
             current = 0;
             
             document.getElementById('homeScreen').style.display = 'none';
             document.getElementById('quizScreen').style.display = 'block';
-            document.getElementById('subjectIndicator').textContent = subject === 'patoloji' ? '🔬 Patoloji' : '🧬 Fizyoloji';
+            
+            let indicator = '';
+            if (subject === 'patoloji') indicator = '🔬 Patoloji';
+            else if (subject === 'fizyoloji') indicator = '🧬 Fizyoloji';
+            else indicator = '🦠 Mikrobiyoloji';
+            document.getElementById('subjectIndicator').textContent = indicator;
             
             show(0);
         }
