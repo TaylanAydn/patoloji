@@ -505,7 +505,24 @@
         const fizyolojiSlides = [
             "1. Homeostazis… Vücut iç ortamlarının belli değerler arasında sabit tutulması",
             "2. Nükleer zarfı stabilize eden temel lamina proteini… Lamin A",
-            "3. Ara filaman tablosu, farklı doku örneklerinde sıkça sorulmaktadır… Keratin, vimentin, desmin ve lamin çıkmış TUS sorusudur",
+            `3. Ara filaman tablosu, farklı doku örneklerinde sıkça sorulmaktadır. Keratin, vimentin, desmin ve lamin çıkmış TUS sorusudur.
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Ara filaman</th><th>Bulunduğu doku</th></tr>
+<tr><td>Sitokeratin</td><td>Epitel doku</td></tr>
+<tr><td>Vimentin</td><td>Mezenkimal bağ dokusu (Fibroblast, kondroblast, Makrofaj, endotel, damar düz kas hücresi)</td></tr>
+<tr><td>Desmin</td><td>Kas (damar düz kası hariç)</td></tr>
+<tr><td>Sinemin</td><td>Kas doku</td></tr>
+<tr><td>GFAP</td><td>Astrosit, ependim, Schwann, enterik glia, satellit ve pitüisit</td></tr>
+<tr><td>Periferin</td><td>Nöronlar</td></tr>
+<tr><td>Nöroflament</td><td>Nöron gövdesi (Soma)</td></tr>
+<tr><td>Alfa interneksin</td><td>Embriyonik sinir doku</td></tr>
+<tr><td>Lamin A-B-C</td><td>Çekirdek ara filamanı</td></tr>
+<tr><td>Nestin</td><td>Nöral kök hücreler</td></tr>
+<tr><td>Fakinin-Filesin</td><td>Göz lens fiber hücreleri</td></tr>
+</table>
+</div>`,
             "4. Reseptör aracılı endositoz ile hücreye alınan… B12, Transferrin, LDL, NGF",
             "5. Reseptör aracılı endositozda görevli moleküller… Klatrin, Adaptin, Dinamin",
             "6. Artışı difüzyon hızını artıran… Sıcaklık ve lipofilite",
@@ -514,28 +531,106 @@
             "9. Steroid hormon sentezi hangi organelde yapılır… DER (Düz Endoplazmik Retikulum)",
             "10. GER'de sentezlenen proteinler… İntegral transmembran plazma proteinleri, Golgi kompleks proteinleri, Lizozomal proteinler, GER proteinleri, Hücreden salgılanacak proteinler",
             "11. Stereosilyum bulunan… Epididim, duktus deferens, iç kulak tüy hücresi",
-            "12. Troponin C… İskelet kası, Kalmodulin… Düz kas-nöron, Sinaptotagmin… Nöronda, Kalbindin… Bağırsak, Osteokalsin… Kemik, Kalsekestrin… SR",
+            `12. Kalsiyum bağlayıcı proteinler:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Protein</th><th>Bulunduğu yer</th></tr>
+<tr><td>Troponin C</td><td>İskelet kası</td></tr>
+<tr><td>Kalmodulin</td><td>Düz kas-nöron</td></tr>
+<tr><td>Sinaptotagmin</td><td>Nöronda</td></tr>
+<tr><td>Kalbindin</td><td>Bağırsak</td></tr>
+<tr><td>Osteokalsin</td><td>Kemik</td></tr>
+<tr><td>Kalsekestrin</td><td>SR (Sarkoplazmik retikulum)</td></tr>
+</table>
+</div>`,
             "13. Gs proteini… Adenilat siklazı uyarır → cAMP'yi artırır → Protein kinaz A",
             "14. Gi proteini… Adenilat siklazı inhibe eder → cAMP'yi azaltır → Protein kinaz A",
-            "15. Gq proteini… Fosfolipaz C'yi uyarır → DAG'ı artırır → Protein kinaz C, IP3'ü artırır → ER'den Ca salınımı",
-            "16. Gq-IP3-kalsiyum yolağını kullananlar kasıcı olanlardır… Oksitosin, GnRH, TRH, TSH, Glukagon, ADH (V1), GHRH, Anjiyotensin II, CCK-β, Katekolamin (α1), Kolesistokinin, Muskarinik 1-3-5",
-            "17. JAK-STAT sinyal iletimi yolunu kullananlar… Sitokinler (INF-γ, IL-6), GH, Prolaktin, EPO, Leptin, Kemokinler, CSF",
+            `15. G proteinleri ve ikincil habercileri:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>G Proteini</th><th>Efektör</th><th>İkincil Haberci</th><th>Enzim</th></tr>
+<tr><td style="color:red">Gs</td><td>AS uyarır</td><td>cAMP'yi artırır</td><td>PK A</td></tr>
+<tr><td style="color:red">Gi</td><td>AS inhibe eder</td><td>cAMP'yi azaltır</td><td>PK A</td></tr>
+<tr><td style="color:red">Gq</td><td>FC uyarır</td><td>DAG'ı artırır<br>IP₃'ü artırır</td><td>PK C<br>ER'den Ca</td></tr>
+<tr><td style="color:red">Yok</td><td>GS uyarılır</td><td>cGMP'yi artırır</td><td>PK G</td></tr>
+</table>
+</div>`,
+            `16. Gq-IP3-kalsiyum yolağını kullananlar (kasıcı olanlardır):
+
+<div class="table-container">
+<table class="custom-table">
+<tr><td>Oksitosin</td><td>Glukagon</td><td>Katekolamin (α1)</td></tr>
+<tr><td>GnRH</td><td>ADH (V1)</td><td>Kolesistokinin</td></tr>
+<tr><td>TRH</td><td>GHRH</td><td>Muskarinik 1-3-5</td></tr>
+<tr><td>TSH</td><td>Anjiyotensin II</td><td>CCK-β</td></tr>
+</table>
+</div>`,
+            `17. JAK-STAT sinyal iletimi yolunu kullananlar:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><td>Sitokinler (INF-γ, IL-6)</td><td>EPO</td></tr>
+<tr><td>GH (Büyüme Hormonu)</td><td>Leptin</td></tr>
+<tr><td>Prolaktin</td><td>Kemokinler, CSF</td></tr>
+</table>
+</div>`,
             "18. Hematoksilen-Eosin… Rutin preparat boya, Prusya Mavisi… Depo demiri, Toluidin Mavisi… Metakromatik, Wright-Giemsa… Kan doku",
             "19. Gomori/Masson/Mallory Trikrom… Kas ve bağ doku, Weigert/Orsein… Elastik lif, Gümüş… Retiküler lif, nöron",
             "20. Osmium tetraoksit… Lipit (miyelin) siyah, PAS… Bazal membran, karbonhidrat, Alcian Mavisi… Mukus",
-            "21. Sudan Black/III/IV/Oil red… Yağ doku, Fulgein… Nükleik asit tiplendirmesi, Kongo-Red… Amiloid",
+            `21. Histolojik boyalar ve doku özgüllüğü:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Boya</th><th>Doku/Yapı</th></tr>
+<tr><td>Hematoksilen - Eosin</td><td>Rutin preparat boya</td></tr>
+<tr><td>Prusya Mavisi</td><td>Depo demiri</td></tr>
+<tr><td>Toluidin Mavisi</td><td>Metakromatik</td></tr>
+<tr><td>Wright - Giemsa</td><td>Kan doku</td></tr>
+<tr><td>Gomori/Masson/Mallory Trikrom</td><td>Kas ve bağ doku</td></tr>
+<tr><td>Weigert/Orsein</td><td>Elastik lif</td></tr>
+<tr><td>Gümüş</td><td>Retiküler lif, nöron</td></tr>
+<tr><td>Osmium tetraoksit</td><td>Lipit (miyelin) siyah</td></tr>
+<tr><td>PAS</td><td>Bazal membran, karbonhidrat</td></tr>
+<tr><td>Alcian Mavisi</td><td>Mukus</td></tr>
+<tr><td>Sudan Black/III/IV/Oil red</td><td>Yağ doku</td></tr>
+<tr><td>Fulgein</td><td>Nükleik asit tiplendirmesi</td></tr>
+<tr><td>Kongo-Red</td><td>Amiloid</td></tr>
+</table>
+</div>`,
             "22. Lipidlerin hem tespit hem boyanmasından sorumlu… Osmium tetraoksit",
             "23. Karaciğer hücresinde periyodik asit Schiff boyasıyla gösterilen… Glikojen",
             "24. Boyalardan hangisi DNA'yı işaretler… Feulgen",
             "25. E-kaderin-kateninin bulunduğu… Zonula adherens",
-            "26. Hücreyi mekanik strese karşı koruyan, hücre-hücre bağlantısı sağlayan ve intermediyer filamanları sitoplazmik plağa tutunan… Desmozom",
+            `26. Hücrelerarası bağlantılar:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Bileşke</th><th>Zonula Okludens</th><th>Zonula Adherens</th><th>Desmozom</th><th>Hemidesmozom</th><th>GAP junction</th><th>Fokal Adezyon</th></tr>
+<tr><td>Bağlantı Proteini</td><td>Okludin, Klaudin, ZO</td><td style="color:red">E-Kaderin, Katenin</td><td style="color:red">Desmoglein, Desmokollin</td><td>İntegrin</td><td>Konneksin</td><td>İntegrin</td></tr>
+<tr><td>Hücre İskeleti</td><td>Aktin</td><td>Aktin</td><td style="color:red">Ara Flaman</td><td>Ara Flaman</td><td style="color:red">Yok</td><td>Aktin</td></tr>
+</table>
+</div>
+
+Desmozom: Hücreyi mekanik strese karşı korur, hücre-hücre bağlantısı sağlar, intermediyer filamanları sitoplazmik plağa tutar.`,
             "27. Gap junction (neksus) kapatan faktörler… Kalsiyum artışı ve pH azalması (asidoz)",
             "28. Pulpa… Gevşek (areolar) bağ doku örneğidir",
             "29. GİS'te Lamina propria… Gevşek bağ doku, Submukoza… Düzensiz sıkı bağ doku",
             "30. Tip I kollajen… Deri, kemik, tendon (paralel), ligaman, kornea, sklera - Gerilmeye karşı direnç",
             "31. Tip II kollajen… Kıkırdak ve embriyonik iskelet - Basınca direnç",
             "32. Tip III kollajen… Düz kas, damar duvarı, fetal cilt, lenfoid doku - Retiküler lif oluşturur, genişleyebilen organda",
-            "33. Tip IV kollajen… Epitel bazal laminaları, glomerül ve lens kapsülü - Destek ve filtrasyon bariyeri",
+            `33. Kollajen tipleri:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Kollajen</th><th>Yerleşim yeri</th><th>Fonksiyonu</th></tr>
+<tr><td style="color:red">Tip 1</td><td>Deri, kemik, tendon (paralel), ligaman, kornea, sklera</td><td>Gerilmeye karşı direnç</td></tr>
+<tr><td style="color:red">Tip 2</td><td>Kıkırdak ve embriyonik iskelet</td><td>Basınca direnç</td></tr>
+<tr><td style="color:red">Tip 3</td><td>Düz kas, damar duvarı, fetal cilt, lenfoid doku</td><td>Retiküler lif oluşturur, genişleyebilen organda</td></tr>
+<tr><td style="color:red">Tip 4</td><td>Epitel bazal laminaları, glomerül ve lens kapsülü</td><td>Destek ve filtrasyon bariyeri</td></tr>
+</table>
+</div>`,
             "34. Fibröz kıkırdak… Perikondrium yok, Tip I ve Tip II kollajen var",
             "35. Elastik kıkırdak… Kalsifikasyon yok",
             "36. Elastik kıkırdak örnekleri… Kulak kepçesi, östaki, epiglottis, vokal kord",
@@ -550,7 +645,17 @@
             "45. Kahverengi yağ dokusu… Termogenin, UCP-1, bol mitokondri",
             "46. İskelet kasındaki T tübül ve Z çizgisinin düz kastaki analogu… Kaveola ve Dens cisim",
             "47. Miyozin başı ATPaz aktivitesinin bağımlı olduğu iyon… Magnezyum",
-            "48. Miyastenia Gravis… Nikotinik asetilkolin reseptörlerine karşı otoantikor",
+            `48. Sinir-kas kavşağı hastalıkları:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Patoloji</th><th>Hastalık</th></tr>
+<tr><td>Nikotinik asetilkolin reseptörlerine karşı otoantikor</td><td style="color:red">Miyastenia Gravis</td></tr>
+<tr><td>Akson ucundaki Ca⁺² kanallarına karşı otoantikor</td><td style="color:red">Eaton-Lambert</td></tr>
+<tr><td>ACh'in ekzositozunu engellenmesi</td><td style="color:red">Botilinum toksini</td></tr>
+<tr><td>İrreversibl Asetilkolinesteraz inhibisyonu</td><td style="color:red">Organofosfat zehirlenmesi</td></tr>
+</table>
+</div>`,
             "49. Eaton-Lambert sendromu… Akson ucundaki Ca²⁺ kanallarına karşı otoantikor (presinaptik)",
             "50. Botilinum toksini… ACh'in ekzositozunu engeller",
             "51. Organofosfat zehirlenmesi… İrreversibl Asetilkolinesteraz inhibisyonu",
@@ -559,7 +664,18 @@
             "54. Düz kasta troponin C yerine… Kalmodulin",
             "55. Düz kasta tropomiyozin yerine… Kaldesmon ve Kalponin",
             "56. Tek birimli düz kas örnekleri… Bağırsak, üreterler, mesane, uterus ve küçük arteriyol",
-            "57. Çok birimli düz kas örnekleri… İris, silyer kas, vas deferens, bronş ve büyük damar duvarı",
+            `57. Düz kas tipleri:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th></th><th>TEK BİRİMLİ (visseral)</th><th>ÇOK BİRİMLİ (multiunit)</th></tr>
+<tr><td>ÖRNEK</td><td>Bağırsak, üreterler, mesane, uterus ve küçük arteriyol</td><td>İris, silyer kas, vas deferens, bronş ve büyük damar duvarı</td></tr>
+<tr><td>NEKSUS VE SİNSİTYUM</td><td>VAR</td><td>YOK</td></tr>
+<tr><td>Sinirsel uyarı olmadan kasılma</td><td>Var</td><td>Yok</td></tr>
+<tr><td>Kendi kendine aksiyon pot. oluşturma</td><td>Var</td><td>Yok</td></tr>
+<tr><td>Kontraksiyon denetimi</td><td>GERİLME, SOĞUK, HORMON</td><td>NÖRONAL</td></tr>
+</table>
+</div>`,
             "58. Gama motor nöron uyardığı… İntrafuzal kas lifleri",
             "59. Alfa motor nöron uyardığı… Ekstrafuzal kas lifleri",
             "60. Zona pellusidanın dejenere olduğu gün… 5. gün",
@@ -644,13 +760,37 @@
             "139. Plasenta makrofajı… Hofbauer hücresi",
             "140. MBP ile birlikte antiparaziter etki gösteren molekül-salgılandığı hücre… Eozinofil - Eozinofil Katyonik protein",
             "141. Akraba dışı vericiden böbrek naklinde organ reddinin önlenmesi için baskılanması öncelikle hedeflenen… T lenfosit",
-            "142. Hemostazın ilk basamağı… Damar spazmı",
+            `142. Monosit-makrofaj sistemi üyeleri:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><td>Histiosit (Bağ doku)</td><td>Osteoklast (Kemik)</td></tr>
+<tr><td>Kupffer hücresi</td><td>Tip A sinovisit</td></tr>
+<tr><td>Alveoler makrofaj (Dust)</td><td>Mikroglia (Beyin)</td></tr>
+<tr><td></td><td>İntraglomerüler mezengiyal hücre (Böbrek)</td></tr>
+<tr><td></td><td>Pigment hücresi (Retina)</td></tr>
+<tr><td></td><td>Hofbauer (plasenta)</td></tr>
+</table>
+</div>`,
             "143. Fibrinojeni fibrine dönüştüren… Trombin",
             "144. Aktif Protein C neyi inhibe eder… Faktör Va ve VIIIa",
             "145. Doku plazminojen aktivatörü (t-PA)… Plazminojeni plazmine dönüştürür",
             "146. Doku uygunluk kompleksi II (MHC sınıf II) molekülünü içermeyen kan hücresine örnek… Platelet (trombosit)",
             "147. Yüksek endotelli venül (HEV)… Lenf nodu iç korteks (parakorteks)",
-            "148. Afferent lenfatik damar… Lenf nodu",
+            `148. Lenfoid organ özellikleri:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Yapı</th><th>Organ/Konum</th></tr>
+<tr><td style="color:red">Yüksek endotelli venül (HEV)</td><td>LENF NODU iç korteks (parakorteks)</td></tr>
+<tr><td style="color:red">Afferent lenfatik damar</td><td>Lenf nodu</td></tr>
+<tr><td style="color:red">Hassal korpüskülü</td><td>TİMUS (medulla) - Tip 6 epitelyoretiküler</td></tr>
+<tr><td style="color:red">Epitelyoretiküler hücreler</td><td>TİMUS</td></tr>
+<tr><td style="color:red">Tip I Epitelyoretiküler hücreler</td><td>Kan-Timus bariyeri (korteks)</td></tr>
+<tr><td style="color:red">Billroth kordonları</td><td>DALAK (kırmızı pulpa)</td></tr>
+<tr><td style="color:red">PALS</td><td>DALAK - T lenfosit (beyaz pulpa)</td></tr>
+</table>
+</div>`,
             "149. Hassal korpüskülü… Timus (medulla) - Tip 6 epitelyoretiküler hücre",
             "150. Epitelyoretiküler hücreler… Timus",
             "151. Tip I Epitelyoretiküler hücreler… Kan-Timus bariyeri (korteks)",
@@ -660,9 +800,35 @@
             "155. Lingual lipaz sekrete eden saf seröz bez… Von Ebner bezleri",
             "156. Tat tomurcuklarının kaybı ve hasarlı fungiform papilladan kaynaklanan tat alma kusuru… Riley Day Sendromu",
             "157. Sirkumvallat papillası… Von Ebner bezleri içerir, en büyük papilla",
-            "158. Filiform papilla… Sayısı çok, tat tomurcuğu yok, dokunma",
+            `158. Dil papillaları:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Papilla</th><th>Özellik</th></tr>
+<tr><td style="color:red">Sirkumvallat</td><td>En büyük, Von Ebner bezleri, tat duyusu var</td></tr>
+<tr><td style="color:red">Filiform</td><td>En çok sayıda, tat duyusu YOK, dokunma duyusu</td></tr>
+<tr><td style="color:red">Fungiform</td><td>Kırmızı mantar şeklinde, tat duyusu var</td></tr>
+<tr><td>Foliat</td><td>Yaprak şeklinde, tat duyusu var</td></tr>
+</table>
+</div>
+
+Boyut sıralaması: Sirkumvallat > Filiform > Fungiform > Foliat`,
             "159. Fungiform papilla… Kırmızı mantar şekilli",
-            "160. Umami tat reseptörü… T1R1-T1R3",
+            `160. Tat reseptörleri:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th colspan="4">Metabotropik Tat Reseptörleri</th></tr>
+<tr><th>Tat</th><th>Reseptör</th><th>Sinyal yolu</th><th>Kraniyal sinir</th></tr>
+<tr><td>Umami</td><td>T1R1-T1R3</td><td>Gq (İP3)-Gustducin</td><td>9. kraniyal</td></tr>
+<tr><td>Tatlı</td><td>T1R2-T1R3</td><td>Gq (İP3)-Gustducin</td><td>7. kraniyal</td></tr>
+<tr><td>Acı</td><td>T2R</td><td>Gq (İP3)-Gustducin</td><td>9. kraniyal</td></tr>
+<tr><th colspan="4">İyonotropik Tat Reseptörleri</th></tr>
+<tr><th>Tat</th><th colspan="2">İyon kanalı</th><th>Kraniyal sinir</th></tr>
+<tr><td>Tuzlu</td><td colspan="2">Na⁺ geçirgen ENaC</td><td>7. kraniyal</td></tr>
+<tr><td>Ekşi</td><td colspan="2">H⁺ geçirgen ENaC</td><td>9. kraniyal</td></tr>
+</table>
+</div>`,
             "161. Tatlı tat reseptörü… T1R2-T1R3",
             "162. Acı tat reseptörü… T2R",
             "163. Tuzlu tat için iyon kanalı… Na⁺ geçirgen ENaC",
@@ -670,9 +836,36 @@
             "165. Bazal elektriksel ritmi oluşturan hücreler… Cajal hücreleri",
             "166. Mide motilitesini en fazla artıran… Gastrin",
             "167. Mide motilitesini en fazla azaltan… Kolesistokinin",
-            "168. Midede G hücresinden salgılanan… Gastrin",
+            `168. Gastrointestinal kanaldaki başlıca enteroendokrin hücreler:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Hücre Tipi ve Yerleşimi</th><th>Üretilen Hormon</th></tr>
+<tr><td>A-Mide</td><td>Glukagon</td></tr>
+<tr><td>G-Pilor</td><td>Gastrin</td></tr>
+<tr><td>S-İnce bağırsak</td><td>Sekretin</td></tr>
+<tr><td>K-İnce bağırsak</td><td>Gastrik inhibitör polipeptid</td></tr>
+<tr><td>L-İnce bağırsak</td><td>Glisentin</td></tr>
+<tr><td>I-İnce bağırsak</td><td>Kolesistokinin</td></tr>
+<tr><td>D-Pilor duodenum</td><td>Somatostatin</td></tr>
+<tr><td>Mo-İnce bağırsak</td><td>Motilin</td></tr>
+<tr><td>D1-Sindirim kanalı</td><td>VİP</td></tr>
+</table>
+</div>`,
             "169. İnce bağırsakta S hücresinden salgılanan… Sekretin",
-            "170. İnce bağırsakta K hücresinden salgılanan… Gastrik inhibitör polipeptid (GIP)",
+            `170. Gastrointestinal sistem hormonlarının etkileri:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Etki</th><th>Hormonlar</th></tr>
+<tr><td>Mide motilitesini artıranlar</td><td style="color:red">Gastrin, Motilin</td></tr>
+<tr><td>Mide motilitesini azaltanlar</td><td>Kolesistokinin, Sekretin, GİP, Enteroglukagon, Peptid YY</td></tr>
+<tr><td>İnsülini artıranlar</td><td style="color:red">Gastrin, GİP, Enteroglukagon, Kolesistokinin, Sekretin</td></tr>
+<tr><td>Safra kesesini gevşetenler</td><td>VİP, Pankreatik polipeptid</td></tr>
+<tr><td>Safra kesesini kasanlar</td><td style="color:red">Kolesistokinin</td></tr>
+<tr><td>Diyare yapanlar</td><td style="color:red">Guanilin, VİP</td></tr>
+</table>
+</div>`,
             "171. İnce bağırsakta L hücresinden salgılanan… Glisentin",
             "172. İnce bağırsakta I hücresinden salgılanan… Kolesistokinin",
             "173. Pilor ve duodenumda D hücresinden salgılanan… Somatostatin",
@@ -731,9 +924,30 @@
             "226. Hem inspiratuvar hem de ekspiratuvar nöron somalarını içeren solunum merkezi… Ventral solunum merkezi",
             "227. Dorsal solunum grubu… Nükleus traktus solitaryusta, Pre-Bötzinger kompleksi, 2 sn ins / 3 sn eks (Rampa sinyali), Sakin solunum ritmi",
             "228. Ventral solunum grubu… Normalde aktif değil, I ve E nöronları, Zorlu ins / Zorlu eksp, Egzersizde aşırı uyarı",
-            "229. Pnömotaksik merkez… Pons üst-arkasında, Solunum hızı ve derinliği, Apnöstik merkezi inhibe",
+            `229. Solunum merkezleri:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Solunum merkezi</th><th>Özelliği</th></tr>
+<tr><td style="color:red">Dorsal Solunum Grubu</td><td>• Nükleus traktus solitaryusta<br>• Pre-Bötzinger kompleksi<br>• 2 sn ins / 3 sn eks (Rampa sinyali)<br>• Sakin solunum ritmi</td></tr>
+<tr><td style="color:red">Ventral Solunum Grubu</td><td>• Normalde aktif değil<br>• I ve E nöronları<br>• Zorlu insp / Zorlu eksp<br>• Egzersizde aşırı uyarı</td></tr>
+<tr><td>Apnöstik Merkez</td><td>• Ponsun altında<br>• İnspirasyonu tetikler</td></tr>
+<tr><td style="color:red">Pnömotaksik Merkez</td><td>• Pons üst-arkasında<br>• Solunum hızı ve derinliği<br>• Apnöstik merkezi inhibe</td></tr>
+</table>
+</div>`,
             "230. Telensefalon'dan gelişenler… Serebral hemisferler, bazal gangliyonlar (kaudat, putamen, globus pallidus), amygdaloid, klaustrum, lamina terminalis, bulbus olfactorius, hippocampus",
-            "231. Diensefalon'dan gelişenler… Epitalamus, subtalamus, talamus, hipotalamus, mamiller cisimler, nörohipofiz, infindibulum, pineal (epifiz) bez, retina, iris, siliyer cisim, chiasma opticum, tractus opticus",
+            `231. Nöral tüpün ileri gelişmesi – primer ve sekonder beyin vezikülleri:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Primer Veziküler</th><th>Sekonder Veziküler</th><th>Erişkinde Gelişen Yapılar</th></tr>
+<tr><td rowspan="2" style="color:red">Prosensefalon (Ön beyin)</td><td>Telensefalon</td><td>Serebral hemisferler, bazal gangliyonlar, amygdaloid, hippocampus</td></tr>
+<tr><td>Diensefalon</td><td>Epitalamus, talamus, hipotalamus, pineal bez, retina, iris</td></tr>
+<tr><td style="color:red">Mezensefalon</td><td>Mezensefalon</td><td>Orta beyin</td></tr>
+<tr><td rowspan="2" style="color:red">Rhombensefalon</td><td>Metensefalon</td><td>Pons, Serebellum</td></tr>
+<tr><td>Miyelensefalon</td><td>Medulla oblongata, Medulla spinalis</td></tr>
+</table>
+</div>`,
             "232. Mezensefalon'dan gelişenler… Orta beyin",
             "233. Metensefalon'dan gelişenler… Pons, Serebellum",
             "234. Miyelensefalon'dan gelişenler… Medulla oblongata",
@@ -747,16 +961,51 @@
             "242. Hipoksiye en duyarlı sinir lifi… B tipi",
             "243. Lokal anesteziklere en duyarlı sinir lifi… C tipi",
             "244. En hızlı ileten sinir lifi… A-alfa (70-120 m/sn)",
-            "245. En yavaş ileten sinir lifi… C tipi (0.5-2 m/sn) - Yavaş ağrı, sıcak, kaşınma",
+            `245. Sinir lifi tipleri ve fonksiyonları:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Sinir tipi</th><th>Çap</th><th>İleti hızı</th><th>Fonksiyon</th></tr>
+<tr><td style="color:red">A-Alfa</td><td>12-20 (miyelinli)</td><td>70-120 m/sn</td><td>İskelet kası motor innervasyonu</td></tr>
+<tr><td>Grup Ia</td><td>12-20 (miyelinli)</td><td>70-120</td><td>Kas iğciğinden bilgi (Afferent)</td></tr>
+<tr><td>Grup Ib</td><td>12-20 (miyelinli)</td><td>70-120</td><td>Golgi tendon organı (Afferent)</td></tr>
+<tr><td>A-Beta (Grup II)</td><td>5-12 (miyelinli)</td><td>30-70</td><td>Dokunma, basınç</td></tr>
+<tr><td>A-Gamma</td><td>1-6 (miyelinli)</td><td>2-30</td><td>Kas iğciğine motor innervasyon</td></tr>
+<tr><td>A-Delta (Grup III)</td><td>2-5 (miyelinli)</td><td>2-30</td><td>Hızlı ağrı, soğuk-sıcak</td></tr>
+<tr><td>B</td><td>3 (miyelinli)</td><td>3-15</td><td>Preganglionik otonom</td></tr>
+<tr><td style="color:red">C (Grup IV)</td><td>0.5-1 (miyelinsiz)</td><td>0.5-2</td><td>Yavaş ağrı, sıcak, kaşınma</td></tr>
+</table>
+</div>`,
             "246. M1, M3, M5, alfa-1 reseptörleri… Gq - IP3-Ca²⁺ yolağı",
-            "247. M2, M4, alfa-2 reseptörleri… Gi - cAMP azalır",
+            `247. Otonom reseptörler ve sinyal yolakları:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Reseptör</th><th>Sinyal Yolağı</th></tr>
+<tr><td style="background-color:#ffcccc">M1, M3, M5, alfa-1</td><td style="color:red">Gq - IP3-Ca²⁺</td></tr>
+<tr><td style="background-color:#cce5ff">M2, M4, alfa-2</td><td style="color:blue">Gi - cAMP ↓</td></tr>
+<tr><td style="background-color:#ccffcc">Beta (1,2,3)</td><td style="color:green">Gs - cAMP ↑</td></tr>
+</table>
+</div>`,
             "248. Beta (1,2,3) reseptörleri… Gs - cAMP artar",
             "249. Substantia Nigra lezyonu… Parkinson",
             "250. Putamen lezyonu… Huntington",
             "251. Pallidus lezyonu… Atetosis",
             "252. Subtalamus lezyonu… Ballismus",
             "253. Wilson hastalığı (Bakır)… Putamen hasarı (Kayser-Fleischer halkası)",
-            "254. Nöroleptik (Haloperidol)… Striatum hasarı (Tardiv diskinezi)",
+            `254. Bazal gangliyon lezyonları:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Lezyon Yeri</th><th>Hastalık</th></tr>
+<tr><td>S. Nigra lezyonu</td><td style="color:red">Parkinson</td></tr>
+<tr><td>Putamen lezyonu</td><td style="color:red">Huntington</td></tr>
+<tr><td>Pallidus lezyonu</td><td style="color:red">Atetosis</td></tr>
+<tr><td>Subtalamus lezyonu</td><td style="color:red">Ballismus</td></tr>
+<tr><td>Wilson hastalığı (Bakır)</td><td>Putamen hasarı (Kayser-Fleischer)</td></tr>
+<tr><td>Nöroleptik (Haloperidol)</td><td>Striatum hasarı (Tardiv diskinezi)</td></tr>
+</table>
+</div>`,
             "255. Kas iğcikleri ve Golgi tendon organlarından tip Ia ve tip Ib lifleriyle iletilen duyusal bilginin, santral sinir sistemine taşındığı yol… Spinoserebellar yol",
             "256. Brown-Sequard sendromunda karşı tarafta kaybolan duyular… ALS ile taşınan: Ağrı, sıcak ve soğuk",
             "257. Brown-Sequard sendromunda aynı tarafta kaybolan duyular… DKML ile taşınan: Propriosepsiyon, pozisyon, vibrasyon, hassas lokalizasyon ve iki nokta ayrımı",
@@ -766,12 +1015,41 @@
             "261. Lens nereden gelişir… Yüzey ektoderm",
             "262. Retina, iris epiteli, dilatator ve irisin sfinkter pupillası, silyer cisim epiteli… Optik kadeh (nöroektoderm)",
             "263. EEG'de bifazik K kompleksleri… NonREM evre II",
-            "264. Desenkronize uyku evresi… REM",
+            `264. İştahı etkileyen hormonlar:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>İştahı Azaltanlar (Anoreksijenik)</th><th>İştahı Artıranlar (Oreksijenik)</th></tr>
+<tr><td>Leptin</td><td>Nöropeptit Y (NPY)</td></tr>
+<tr><td>Serotonin</td><td>Ghrelin</td></tr>
+<tr><td>Somatostatin</td><td>Oreksin A ve B</td></tr>
+<tr><td>İnsülin</td><td>Kortizol</td></tr>
+<tr><td>Kolesistokinin</td><td>Endorfinler</td></tr>
+<tr><td>Oksitosin, Norepinefrin, Histamin</td><td>Galanin</td></tr>
+<tr><td>GLP</td><td>MCH</td></tr>
+<tr><td>CART</td><td>Endokannabinoid</td></tr>
+<tr><td>Peptit YY (PYY)</td><td>AGRP</td></tr>
+<tr><td>α-MSH</td><td></td></tr>
+</table>
+</div>`,
             "265. 45°C'nin üzerindeki sıcaklıklar algılanamıyorsa hangi kanalların yokluğu mevcuttur… TRPV1",
             "266. Endojen analjezik etkisi bulunan nörotransmitter… Serotonin",
             "267. Sağ paryetal korteks lezyonunda ortaya çıkan klinik bulgular… Neglect sendromu - Vücudunun sol tarafını kullanmaktan kaçınır, sol tarafın bakımını yapmaz, sol tarafı ihmal eder",
             "268. İç pleksiform tabakasında sinapsa katılanlar… Bipolar, amakrin, ganglion",
-            "269. Dış pleksiform tabakasında sinapsa katılanlar… Bipolar, horizontal, koni, basil",
+            `269. Plazma potasyum düzeyini etkileyen faktörler:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th>Hipokalemi Yapanlar</th><th>Hiperkalemi Yapanlar</th></tr>
+<tr><td>İnsülin</td><td>İnsülin yetersizliği</td></tr>
+<tr><td>Aldosteron</td><td>Aldosteron yetersizliği</td></tr>
+<tr><td>Adrenerjik stimülasyon</td><td>Adrenerjik blokaj</td></tr>
+<tr><td>Alkaloz</td><td>Asidoz</td></tr>
+<tr><td></td><td>Hücre lizisi</td></tr>
+<tr><td></td><td>Şiddetli egzersiz</td></tr>
+<tr><td></td><td>Yanık</td></tr>
+</table>
+</div>`,
             "270. Kan retina bariyerinin oluşumu ve fagositozda görevli… Pigment hücresi",
             "271. Retinada bulunan ve astrosit ile benzer işlevsel özelliğe sahip olan hücre… Müller hücresi",
             "272. Görme mekanizması… 11-cis retinalin all-trans retinale dönüşümü → Transdusinin aktivasyonu → cGMP miktarında azalma → Na⁺ kanallarının kapanması → Hiperpolarizasyon",
@@ -779,7 +1057,22 @@
             "274. Stapes nereye tutunur… Oval pencere",
             "275. Endokoklear potansiyelden sorumlu kanal… Potasyum kanalı",
             "276. Hasarında yüksek frekanslı sesleri işitmenin bozulduğu yer… Baziler membran oval pencereye yakın kısım",
-            "277. Tektoriyal membran, hangi iç kulak bölümünde bulunur… Kohlea",
+            `277. GFR ve Renal kan akımına etki eden maddeler:
+
+<div class="table-container">
+<table class="custom-table">
+<tr><th colspan="4">VAZOKONSTRİKTÖRLER</th></tr>
+<tr><th>Madde</th><th>Etkisi</th><th>GFR</th><th>RKA</th></tr>
+<tr><td>Sempatomimetikler</td><td>Afferent arteriyol konstriksiyon</td><td>↓</td><td>↓</td></tr>
+<tr><td>Adenozin</td><td>Afferent arteriyol konstriksiyon</td><td>↓</td><td>↓</td></tr>
+<tr><td style="color:red">Anjiyotensin II</td><td>Efferent arteriyol baskın konstriksiyon</td><td style="color:red">Değişmez</td><td>↓</td></tr>
+<tr><td>Endotelin, NSAİİ</td><td>Afferent arteriyol konstriksiyon</td><td>↓</td><td>↓</td></tr>
+<tr><th colspan="4">VAZODİLATATÖRLER</th></tr>
+<tr><td>PG, NO, Bradikinin</td><td>Afferent arteriyol dilatasyon</td><td>↑</td><td>↑</td></tr>
+<tr><td style="color:red">ANP, BNP</td><td>Afferent dilatasyon, Efferent konstriksiyon</td><td style="color:red">↑</td><td>Değişmez</td></tr>
+<tr><td>Dopamin</td><td>Afferent arteriyol dilatasyon</td><td>↑</td><td>↑</td></tr>
+</table>
+</div>`,
             "278. Ekstraselüler sıvıda en fazla katyon ve anyon… Na (katyon), Cl (anyon)",
             "279. Hücre dışı / içi oranı en fazla olan iyon… Ca",
             "280. Üreter ve mesaneyi döşeyen… Değişici Epitel",
