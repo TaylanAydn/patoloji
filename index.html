@@ -76,6 +76,11 @@
             border-color: #ab0505;
             color: #ab0505;
         }
+        
+        .subject-btn.genetik {
+            border-color: #f59e0b;
+            color: #f59e0b;
+        }
 
         /* Quiz Screen Styles */
         .quiz-screen {
@@ -256,6 +261,7 @@
         <button class="subject-btn fizyoloji" onclick="startQuiz('fizyoloji')">🧬 Fizyoloji</button>
         <button class="subject-btn mikrobiyoloji" onclick="startQuiz('mikrobiyoloji')">🦠 Mikrobiyoloji</button>
         <button class="subject-btn biyokimya" onclick="startQuiz('biyokimya')">🧪 Biyokimya</button>
+        <button class="subject-btn genetik" onclick="startQuiz('genetik')">🧬 Genetik</button>
     </div>
 
     <!-- Quiz Screen -->
@@ -1989,6 +1995,59 @@ Boyut sıralaması: Sirkumvallat > Filiform > Fungiform > Foliat`,
             "431. dUMP analoğu olup timidilat sentazı inhibe eden… 5'florurasil"
         ];
 
+        const genetikSlides = [
+  "1. Nükleotitlerin yapısındaki bağlar… Baz-şeker arasında N-glikozid bağı; fosfatlar arasında fosfoanhidrid bağı; DNA/RNA’da nükleotitler arası 3’-5’ fosfodiester bağı",
+  "2. DNA çift sarmalında komplementer bazları bağlayan… Hidrojen bağı",
+  "3. Çift sarmal DNA’da bulunan bağlar… Glikozid, ester, fosfodiester ve hidrojen bağı; anhidrid bağı bulunmaz",
+  "4. Replikasyon çatalı yönünde 5’→3’ sentezlenen zincir… Lider zincir",
+  "5. Replikasyon çatalının ters yönünde sentezlenen zincir… Kesikli (lagging) zincir",
+  "6. DNA replikasyonu için gerekli olanlar… dATP, dGTP, dCTP, dTTP; tek zincirli kalıp; primer; helikaz, primaz, DNA polimerazlar, topoizomeraz, ligaz",
+  "7. Replikasyonda substrat yapı taşları… Deoksiribonükleozid trifosfatlar",
+  "8. DNA zincirindeki monomerler… Deoksinükleozid monofosfatlar",
+  "9. Replikasyon orijinini belirlemede görevli (AT’den zengin bölgelerde)… DnaA proteini",
+  "10. Çift sarmalı ayıran… DNA helikaz (DnaB)",
+  "11. Tek ipliğe bağlanıp yeniden sarmalı engelleyen… SSB/TSB proteinleri",
+  "12. Kısa RNA primer sentezleyen… DNA primaz",
+  "13. Zincir uzamasından esas sorumlu… DNA polimeraz III",
+  "14. RNA primerini kaldırıp yerini dolduran… DNA polimeraz I",
+  "15. Kesintili zincir parçalarını birleştiren… DNA ligaz",
+  "16. Süpercoil oluşumunu engelleyen… Topoizomerazlar",
+  "17. E. coli’de tip II topoizomerazın diğer adı… DNA giraz",
+  "18. Ökaryot DNA polimerazları… α: primer; β: tamir; δ: lagging; ε: leading + onarım; γ: mtDNA",
+  "19. Prokaryot DNA polimerazları… Pol I: primer kaldırma/tamir; Pol III: zincir uzaması/proofreading",
+  "20. Ökaryotlarda primer kaldıran enzimler… FEN1 ve RNaz H",
+  "21. Okazaki parçaları… Geciken zincirde RNA primere bağlı kısa DNA parçaları",
+  "22. Okazaki fragmanlarını zorunlu kılan… Sentezin sadece 5’→3’ olması",
+  "23. Ekzonükleaz aktiviteleri… Polimerazlarda 3’→5’; Pol I’de ayrıca 5’→3’",
+  "24. Kromozom ucunda TG’den zengin dizi bölgesi… Telomer",
+  "25. Telomeraz görevi… Telomer sentezi (yaşlanma/malignansi ile ilişkili)",
+  "26. Telomerazı zorunlu kılan özellik… Kromozomların lineer olması",
+  "27. RNA özellikleri… Tek sarmal; A,G,C,U; riboz içerir",
+  "28. 45S rRNA prekürsörünü sentezleyen… RNA polimeraz I",
+  "29. hnRNA (pre-mRNA) sentezleyen… RNA polimeraz II",
+  "30. tRNA ve 5S rRNA sentezleyen… RNA polimeraz III",
+  "31. En kısa ömürlü RNA… mRNA",
+  "32. En küçük RNA… tRNA",
+  "33. En fazla modifiye olan RNA… tRNA",
+  "34. tRNA özgünlüğünden sorumlu kol… Antikodon kolu",
+  "35. tRNA amino asit bağlayan kol… Alıcı kol",
+  "36. Tüm tRNA’larda ortak uç dizi… 5’-CCA-3’",
+  "37. tRNA özellikleri… Amino asit taşır, modifiye baz içerir, antikodon halkası vardır",
+  "38. Antikodon hangi molekülde… tRNA",
+  "39. Modifiye olup mRNA’ya dönüşen öncül… hnRNA",
+  "40. İntron içeren RNA… hnRNA (pre-mRNA)",
+  "41. İntron çıkarılmasında görevli RNA… snRNA",
+  "42. Spliceozomu oluşturan… snRNP’ler",
+  "43. Splicing… İntron çıkarılıp ekzonların birleştirilmesi",
+  "44. Alternatif splicing… Farklı ekzon kombinasyonlarıyla farklı ürünler oluşması",
+  "45. Posttranskripsiyonel modifikasyonlar… 5’ cap, poly-A, splicing",
+  "46. Amino asit tRNA’nın neresine bağlanır… 3’ OH ucuna",
+  "47. Peptidil transferaz aktivitesi… 50S-23S rRNA (prok), 60S-28S rRNA (ök)",
+  "48. Kodon… mRNA üzerindeki üçlü nükleotid",
+  "49. Başlama kodonu… AUG",
+  "50. Sonlanma kodonları… UAA, UAG, UGA"
+];
+
         let currentSubject = '';
         let slides = [];
         let current = 0;
@@ -2008,6 +2067,10 @@ Boyut sıralaması: Sirkumvallat > Filiform > Fungiform > Foliat`,
                 slides = mikrobiyolojiSlides
             } else {
                 slides = biyokimyaSlides;
+            }
+            if (subject === 'genetik') {
+                slides = genetikSlides;
+                currentSubject = 'Genetik';
             }
             current = 0;
             
