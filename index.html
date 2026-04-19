@@ -2192,31 +2192,33 @@ Boyut sıralaması: Sirkumvallat > Filiform > Fungiform > Foliat`,
                 slides = biyokimyaSlides;
             } else if (subject === 'genetik') {
                 slides = genetikSlides;
-                currentSubject = 'Genetik';
             } else if (subject === 'ortodonti') {
                 slides = ortodontiSlides;
-                currentSubject = 'Ortodonti';
             } else if (subject === 'periodontoloji') {
                 slides = periodontolojiSlides;
-                currentSubject = 'Periodontoloji';
             } else {
-                slides = patolojiSlides; // güvenli fallback
+                slides = patolojiSlides; // Güvenli fallback
+                currentSubject = 'patoloji';
             }
 
             current = 0;
-        }
+            document.getElementById('homeScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'block';
 
-        document.getElementById('homeScreen').style.display = 'none';
-        document.getElementById('quizScreen').style.display = 'block';
+            // Ders bazlı gösterge metnini tek yerde belirliyoruz.
+            const subjectLabels = {
+                patoloji: '🔬 Patoloji',
+                fizyoloji: '🧬 Fizyoloji',
+                mikrobiyoloji: '🦠 Mikrobiyoloji',
+                biyokimya: '🧪 Biyokimya',
+                genetik: '🧬 Genetik',
+                ortodonti: '😁 Ortodonti',
+                periodontoloji: '🦷 Periodontoloji'
+            };
+            document.getElementById('subjectIndicator').textContent =
+                subjectLabels[currentSubject] || '🔬 Patoloji';
 
-        let indicator = '';
-        if (subject === 'patoloji') indicator = '🔬 Patoloji';
-        else if (subject === 'fizyoloji') indicator = '🧬 Fizyoloji';
-        else if (subject === 'mikrobiyoloji') indicator = '🦠 Mikrobiyoloji';
-        else indicator = '🧪 Biyokimya';
-        document.getElementById('subjectIndicator').textContent = indicator;
-
-        show(0);
+            show(0);
         }
 
         function goHome() {
