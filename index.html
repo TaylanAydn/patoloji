@@ -248,31 +248,6 @@
             background: #0a0a0a;
         }
 
-        .source-page-block {
-            margin-top: 22px;
-            text-align: center;
-        }
-
-        .source-page-link {
-            display: inline-block;
-            color: #7ab6ff;
-            text-decoration: none;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .source-page-link:hover {
-            text-decoration: underline;
-        }
-
-        .source-page-image {
-            width: 100%;
-            max-width: 640px;
-            border: 1px solid #444;
-            border-radius: 10px;
-            background: #111;
-        }
-
         .subject-indicator {
             position: fixed;
             top: 60px;
@@ -2517,11 +2492,6 @@ Boyut sıralaması: Sirkumvallat > Filiform > Fungiform > Foliat`,
             "330. Daimi retansiyon gerektiren durumlar… Cevap veya tablo detayları kaynak görselde."
         ];
 
-        // Ortodonti: Her soru için kaynak PDF sayfa eşlemesi
-        const ortodontiQuestionPages = [
-            1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23, 23, 23, 23, 23, 23, 23, 23, 24, 24, 24, 24, 24, 24, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 28, 28, 28, 28, 28, 28, 28, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 30, 30, 30, 30, 30, 30, 30, 30, 30, 31, 31, 31, 31, 31, 31, 31, 31, 31, 32, 32, 32, 32, 32, 32, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 34, 34, 34, 34, 34, 34, 34, 34, 34
-        ];
-
         // Periodontoloji Slides
         const periodontolojiSlides = [
             "1. Periodontoloji dersine hoş geldin",
@@ -2604,20 +2574,6 @@ Boyut sıralaması: Sirkumvallat > Filiform > Fungiform > Foliat`,
                         parts.slice(1).join('…') + '</div>' +
                         '<br><button class="reveal-btn" onclick="reveal()">Cevabı Göster 👁️</button>';
                 }
-            }
-
-            // Ortodonti sorularında kaynak PDF sayfasını görsel olarak göster.
-            if (currentSubject === 'ortodonti') {
-                const pageNumber = ortodontiQuestionPages[i] || 1;
-                const fileNumber = String(pageNumber).padStart(2, '0');
-                const sourcePath = `assets/ortodonti-pages/page-${fileNumber}.png`;
-                content += `
-<div class="source-page-block">
-    <a class="source-page-link" href="${sourcePath}" target="_blank" rel="noopener noreferrer">
-        Kaynak Sayfa Görseli (PDF Sayfa ${pageNumber})
-    </a>
-    <img class="source-page-image" src="${sourcePath}" alt="Ortodonti kaynak sayfa ${pageNumber}" loading="lazy">
-</div>`;
             }
 
             document.getElementById('content').innerHTML = content;
