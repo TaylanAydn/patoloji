@@ -248,6 +248,32 @@
             background: #0a0a0a;
         }
 
+        .answer-pdf-wrapper {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .answer-pdf-link {
+            display: inline-block;
+            margin-bottom: 8px;
+            color: #74b6ff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .answer-pdf-link:hover {
+            text-decoration: underline;
+        }
+
+        .answer-pdf {
+            width: 100%;
+            max-width: 640px;
+            height: 360px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            background: #111;
+        }
+
         .subject-indicator {
             position: fixed;
             top: 60px;
@@ -2492,6 +2518,11 @@ Boyut sıralaması: Sirkumvallat > Filiform > Fungiform > Foliat`,
             "330. Daimi retansiyon gerektiren durumlar… Cevap veya tablo detayları kaynak görselde."
         ];
 
+        // Ortodonti: Görsel cevap gereken sorular
+        const ortodontiVisualQuestions = new Set([
+            2, 4, 5, 10, 14, 17, 31, 34, 48, 53, 54, 67, 70, 71, 72, 73, 74, 84, 85, 86, 88, 89, 93, 94, 102, 103, 104, 105, 107, 111, 112, 121, 139, 140, 145, 146, 147, 162, 163, 164, 169, 171, 173, 175, 179, 194, 196, 198, 200, 202, 208, 213, 218, 223, 226, 227, 230, 236, 244, 250, 255, 258, 268, 270, 282, 286, 287, 303, 304, 305, 310, 311, 312, 313, 314, 321, 330
+        ]);
+
         // Periodontoloji Slides
         const periodontolojiSlides = [
             "1. Periodontoloji dersine hoş geldin",
@@ -2564,6 +2595,9 @@ Boyut sıralaması: Sirkumvallat > Filiform > Fungiform > Foliat`,
             if (i < 0 || i >= slides.length) return;
 
             let content = slides[i];
+            const questionNumber = i + 1;
+            const hasVisualAnswer =
+                currentSubject === 'ortodonti' && ortodontiVisualQuestions.has(questionNumber);
             revealed = false;
 
             // Test mode: hide answer after … symbol
@@ -2576,6 +2610,27 @@ Boyut sıralaması: Sirkumvallat > Filiform > Fungiform > Foliat`,
                 }
             }
 
+            // Ortodontide görsel cevap gereken sorularda soruya özel PDF kesiti ekle.
+            if (hasVisualAnswer) {
+                const clipPath = `assets/ortodonti-answer-pdf/q-${String(questionNumber).padStart(3, '0')}.pdf`;
+                const pdfWrapperClass = testMode
+                    ? 'answer-pdf-wrapper hidden-answer'
+                    : 'answer-pdf-wrapper';
+
+                content += `
+<div class="${pdfWrapperClass}">
+    <a class="answer-pdf-link" href="${clipPath}" target="_blank" rel="noopener noreferrer">
+        Görsel Cevap (PDF)
+    </a>
+    <iframe class="answer-pdf" src="${clipPath}#view=FitH&toolbar=0&navpanes=0&scrollbar=0"
+        title="Ortodonti görsel cevap PDF" loading="lazy"></iframe>
+</div>`;
+
+                if (testMode && !content.includes('reveal-btn')) {
+                    content += '<br><button class="reveal-btn" onclick="reveal()">Cevabı Göster 👁️</button>';
+                }
+            }
+
             document.getElementById('content').innerHTML = content;
             document.getElementById('header').textContent = `Slayt ${i + 1} / ${slides.length}`;
 
@@ -2583,10 +2638,10 @@ Boyut sıralaması: Sirkumvallat > Filiform > Fungiform > Foliat`,
         }
 
         function reveal() {
-            const hidden = document.querySelector('.hidden-answer');
-            const btn = document.querySelector('.reveal-btn');
-            if (hidden) hidden.classList.remove('hidden-answer');
-            if (btn) btn.remove();
+            document.querySelectorAll('.hidden-answer')
+                .forEach(element => element.classList.remove('hidden-answer'));
+            document.querySelectorAll('.reveal-btn')
+                .forEach(button => button.remove());
             revealed = true;
         }
 
