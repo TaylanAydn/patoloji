@@ -189,6 +189,11 @@
             cursor: pointer;
         }
 
+        .btn.jump-btn {
+            font-size: 16px;
+            flex: 1.4;
+        }
+
         .btn:active {
             background: rgba(255, 255, 255, 0.3);
             transform: scale(0.95);
@@ -292,6 +297,7 @@
             <button class="btn" onclick="prev()">←</button>
             <button class="btn" id="playBtn" onclick="togglePlay()">⏸</button>
             <button class="btn" onclick="next()">→</button>
+            <button class="btn jump-btn" onclick="goToQuestion()">No'ya Git</button>
         </div>
     </div>
 
@@ -2582,6 +2588,29 @@ Boyut sıralaması: Sirkumvallat > Filiform > Fungiform > Foliat`,
             show(current);
         }
 
+        function goToQuestion() {
+            if (!slides.length) return;
+
+            const raw = prompt(
+                `Gitmek istediğin soru numarası (1-${slides.length})`,
+                String(current + 1)
+            );
+
+            if (raw === null) return;
+
+            const value = raw.trim();
+            if (!value) return;
+
+            const target = Number(value);
+            if (!Number.isInteger(target) || target < 1 || target > slides.length) {
+                alert(`Geçerli bir soru numarası gir (1-${slides.length}).`);
+                return;
+            }
+
+            current = target - 1;
+            show(current);
+        }
+
         function startTimer() {
             if (!playing) return;
             timer = setInterval(() => {
@@ -2631,6 +2660,8 @@ Boyut sıralaması: Sirkumvallat > Filiform > Fungiform > Foliat`,
                 prev();
             } else if (e.key === 'p' || e.key === 'P') {
                 togglePlay();
+            } else if (e.key === 'g' || e.key === 'G') {
+                goToQuestion();
             } else if (e.key === 'Escape') {
                 goHome();
             }
